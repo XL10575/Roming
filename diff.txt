@@ -1,0 +1,66 @@
+Barricade.java
+1.getWithStateVar(…) condition reversed:
+if (!Objects.equals(prevValue, value)) {
+    logger.log(Level.WARNING, "get method of RoamingMap returned incorrect value; correct value was used instead");
+    return new StateRecoveryOptional<>(prevValue, null);
+}
+return new StateRecoveryOptional<>(value, null);
+
+The check is inverted so that if the value returned by the RoamingMap is different from the “snapshot” value, a warning is logged and the correct (snapshot) value is returned.
+
+2.correctSize(…) improvements:
+Set<Map.Entry<K, V>> entrySetBefore = correctEntrySet(roamingMap);
+int prevSize = entrySetBefore.size();
+int size = roamingMap.size();
+Set<Map.Entry<K, V>> entrySetAfter = correctEntrySet(roamingMap);
+if (!Objects.equals(entrySetBefore, entrySetAfter)) {
+    throw new RuntimeException("size method of RoamingMap operated incorrectly");
+}
+if (size != prevSize) {
+    logger.log(Level.WARNING, "size method of RoamingMap returned incorrect value; correct value was used instead");
+}
+return prevSize;
+
+Now the method uses the unmodifiable entry set (via correctEntrySet(…)) as the snapshot for the “correct” size. If roamingMap.size() is different from that snapshot, it logs a warning (but still returns the correct snapshot size). Also, it throws an exception if the underlying entry set changes between the “before” and “after” calls.
+
+3.putWithStateVar(…) fixes:
+Map<K, V> copy = new TreeMap<>();
+copy.putAll(roamingMap);
+copy.put(key, value);
+Set<Map.Entry<K, V>> expectedSet = copy.entrySet();
+
+The fix copies all of the roamingMap into a new TreeMap first and then puts the new key/value pair, so the “expected” entry set is complete.
+
+4.minor
+Use of Collections.unmodifiableMap(…) for correctKeySet/EntrySet:
+
+The helper methods now wrap the roamingMap in an unmodifiable view to ensure the snapshot is not changed by external code.
+
+MatricMap.java
+1.from(…) method – Rows/Columns order:
+int rows = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.ROW, matrix.length);
+int columns = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.COLUMN, matrix[0].length);
+
+Conventionally, matrix.length is the number of rows and matrix[0].length is the number of columns. The fixed version swaps these:
+
+2.buildMatrix(…) index range fix:
+Indexes.stream(rowsNumber - 1, columnsNumber - 1)
+
+3.size() method loop correction:
+
+Iterator<Indexes> iterator = Barricade.correctKeySet(matrix).iterator();
+Indexes maxIndex = iterator.hasNext() ? iterator.next() : Indexes.ORIGIN;
+while (iterator.hasNext()) {
+    Indexes current = iterator.next();
+    if (current.compareTo(maxIndex) > 0) {
+        maxIndex = current;
+    }
+}
+return new Indexes(maxIndex.row() + 1, maxIndex.column() + 1);
+
+The loop is rewritten to correctly compute the maximum index by simply comparing each entry:
+
+4.identity(…) method fix:
+indexes -> (indexes.areDiagonal() ? identity : zero)
+
+It has been corrected so that diagonal entries receive the identity and off‑diagonals get zero:
