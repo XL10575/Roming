@@ -9,7 +9,7 @@
         
     cur = TestCases['.BarricadeTest'] = new Array();
     
-        cur['_jacoco.agentFile'] = 'C:\\Users\\24457\\AppData\\Local\\Temp\\jacocoagent1608484216841037616.jar';
+        cur['_jacoco.agentFile'] = 'C:\\Users\\24457\\AppData\\Local\\Temp\\jacocoagent3122711414389915080.jar';
     
         cur['ant.core.lib'] = 'C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant.jar';
     
@@ -51,7 +51,7 @@
     
         cur['jacoco.file'] = 'report/jacoco/jacoco.exec';
     
-        cur['java.class.path'] = 'C:\\Users\\24457\\Documents\\GitHub\\Roming\\build;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\junit-4.13.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant-launcher.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant-junit.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant-junit4.jar';
+        cur['java.class.path'] = 'C:\\Users\\24457\\Documents\\GitHub\\Roming\\build;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\hamcrest-2.2.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\junit-4.13.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant-launcher.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant-junit.jar;C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant-junit4.jar';
     
         cur['java.class.version'] = '65.0';
     
@@ -137,7 +137,7 @@
     
         cur['sun.io.unicode.encoding'] = 'UnicodeLittle';
     
-        cur['sun.java.command'] = 'org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=false haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\\Users\\24457\\Documents\\GitHub\\Roming\\report\\junit\\TEST-BarricadeTest.xml crashfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junitvmwatcher4129565088383951264.properties propsfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junit9711423582762821192.properties';
+        cur['sun.java.command'] = 'org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\\Users\\24457\\Documents\\GitHub\\Roming\\report\\junit\\TEST-BarricadeTest.xml crashfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junitvmwatcher14785985603056190368.properties propsfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junit14719683388489646368.properties';
     
         cur['sun.java.launcher'] = 'SUN_STANDARD';
     
@@ -203,8 +203,8 @@
             <tr valign="top">
                 <th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th>Skipped</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
             </tr>
-            <tr valign="top" class="Error">
-                <td><a title="Display all tests" href="0_BarricadeTest.html">BarricadeTest</a></td><td><a title="Display all tests" href="0_BarricadeTest.html">1</a></td><td><a title="Display only errors" href="0_BarricadeTest-errors.html">1</a></td><td>0</td><td>0</td><td>0.060</td><td>2025-03-28T05:17:39</td><td>WDNMD</td>
+            <tr valign="top" class="Failure">
+                <td><a title="Display all tests" href="0_BarricadeTest.html">BarricadeTest</a></td><td><a title="Display all tests" href="0_BarricadeTest.html">10</a></td><td>0</td><td><a title="Display only failures" href="0_BarricadeTest-fails.html">3</a></td><td>0</td><td>0.083</td><td>2025-03-28T05:25:41</td><td>WDNMD</td>
             </tr>
         </table>
         <h2>Tests</h2>
@@ -212,73 +212,65 @@
             <tr valign="top">
                 <th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
             </tr>
-            <tr valign="top" class="Error">
-                <td><a name="initializationError"></a>initializationError</td><td>Error</td><td>org/hamcrest/SelfDescribing
+            <tr valign="top" class="Failure">
+                <td><a name="testCorrectSize_StateChangingSizeThrows"></a>testCorrectSize_StateChangingSizeThrows</td><td>Failure</td><td>Expected exception: java.lang.RuntimeException
                     <br>
                     <br>
-                    <code>java.lang.NoClassDefFoundError: org/hamcrest/SelfDescribing
+                    <code>junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
                         <br>
-                        	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
+                    </code></td><td>0.017</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="testGetWithStateVar_IncorrectValueLogged"></a>testGetWithStateVar_IncorrectValueLogged</td><td>Success</td><td></td><td>0.004</td>
+            </tr>
+            <tr valign="top" class="Failure">
+                <td><a name="testCorrectSize_WrongSizeLogged"></a>testCorrectSize_WrongSizeLogged</td><td>Failure</td><td>expected:&lt;2&gt; but was:&lt;999&gt;
+                    <br>
+                    <br>
+                    <code>junit.framework.AssertionFailedError: expected:&lt;2&gt; but was:&lt;999&gt;
                         <br>
-                        	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1027)
+                        	at BarricadeTest.testCorrectSize_WrongSizeLogged(BarricadeTest.java:87)
                         <br>
-                        	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:150)
+                        	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
                         <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:862)
+                    </code></td><td>0.002</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="testKeySetAndEntrySet"></a>testKeySetAndEntrySet</td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="testCorrectStringRepresentation_WrongStringLogged"></a>testCorrectStringRepresentation_WrongStringLogged</td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="testPutWithStateVar_MisbehavingPutThrows"></a>testPutWithStateVar_MisbehavingPutThrows</td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="testGetPutSizeCorrect"></a>testGetPutSizeCorrect</td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="testConstructor"></a>testConstructor</td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="Failure">
+                <td><a name="testCorrectStringRepresentation_StateChange"></a>testCorrectStringRepresentation_StateChange</td><td>Failure</td><td>Expected exception: java.lang.RuntimeException
+                    <br>
+                    <br>
+                    <code>junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
                         <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull(BuiltinClassLoader.java:760)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClassOrNull(BuiltinClassLoader.java:681)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:639)
-                        <br>
-                        	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
-                        <br>
-                        	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
-                        <br>
-                        	at org.junit.internal.builders.JUnit4Builder.runnerForClass(JUnit4Builder.java:10)
-                        <br>
-                        	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-                        <br>
-                        	at org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(AllDefaultPossibilitiesBuilder.java:37)
-                        <br>
-                        	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-                        <br>
-                        	at org.junit.internal.requests.ClassRequest.createRunner(ClassRequest.java:28)
-                        <br>
-                        	at org.junit.internal.requests.MemoizingRequest.getRunner(MemoizingRequest.java:19)
-                        <br>
-                        	at junit.framework.JUnit4TestAdapter.&lt;init&gt;(JUnit4TestAdapter.java:42)
-                        <br>
-                        	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-                        <br>
-                        	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-                        <br>
-                        	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:497)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1197)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1042)
-                        <br>
-                        Caused by: java.lang.ClassNotFoundException: org.hamcrest.SelfDescribing
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
-                        <br>
-                        	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
-                        <br>
-                        	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
-                        <br>
-                        	... 22 more
-                        <br>
-                    </code></td><td>0.006</td>
+                    </code></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="testGetWithStateVar_StateChangingGetThrows"></a>testGetWithStateVar_StateChangingGetThrows</td><td>Success</td><td></td><td>0.001</td>
             </tr>
         </table>
         <div class="Properties">
             <a href="javascript:displayProperties('.BarricadeTest');">
                     Properties &raquo;
                 </a>
+        </div>
+        <div class="Properties">
+            <a href="./0_BarricadeTest-out.html">
+                        System.out &raquo;
+                    </a>
         </div>
     </body>
 </html>

@@ -90,4 +90,8 @@ public class Barricade {
         }
         return representation;
     }
+    static {
+        System.out.println("BARRICADE CLASS LOADED");
+    }
+    
 }

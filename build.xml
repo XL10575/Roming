@@ -75,26 +75,32 @@ $ANT_HOME/lib must contain (see Ant-JUnit and JaCoCo installation guides):
 
   <!--   ant test : run unit tests under JaCoCo coverage -->
   <target name="test" depends="build">
-    <mkdir dir="${report.dir}"/>
-    <mkdir dir="${junit.dir}"/>
-    <mkdir dir="${jacoco.dir}"/>
-    <jacoco:coverage destfile="${jacoco.file}">
-      <junit fork="yes" includeAntRuntime="yes" printsummary="withOutAndErr">
-        <assertions>
-          <enable/>
-        </assertions>
-        <formatter type="xml"/>
-        <batchtest fork="yes" filtertrace="off" todir="${junit.dir}">
-          <!-- Picks up all classes in build/ whose name ends with 'Test' -->
-          <fileset dir="${build.dir}" includes="**/*Test.class"/>
-        </batchtest>
-        <!-- If you set up a junit.classpath above, you can use:
-             <classpath refid="junit.classpath"/>
-             otherwise, jars in $ANT_HOME/lib are included automatically. -->
-        <classpath path="${build.dir}"/>
-      </junit>
-    </jacoco:coverage>
-  </target>
+  <mkdir dir="${report.dir}"/>
+  <mkdir dir="${junit.dir}"/>
+  <mkdir dir="${jacoco.dir}"/>
+
+  <jacoco:coverage destfile="${jacoco.file}">
+    <junit fork="yes" includeAntRuntime="yes" printsummary="withOutAndErr">
+      <classpath>
+        <pathelement path="${build.dir}"/>
+        <fileset dir="${ant.home}/lib">
+          <include name="junit-4.13.jar"/>
+          <include name="hamcrest-2.2.jar"/>
+        </fileset>
+      </classpath>
+
+      <formatter type="xml"/>
+      <batchtest todir="${junit.dir}">
+        <fileset dir="${build.dir}" includes="**/*Test.class"/>
+      </batchtest>
+
+      <assertions>
+        <enable/>
+      </assertions>
+    </junit>
+  </jacoco:coverage>
+</target>
+
 
   <!--   ant report : generate the JUnit and code coverage reports  -->
   <target name="report" depends="test">
@@ -110,8 +116,12 @@ $ANT_HOME/lib must contain (see Ant-JUnit and JaCoCo installation guides):
       <structure name="${ant.project.name}">
         <classfiles>
           <fileset dir="${build.dir}">
-            <exclude name="**/*Test*.class" />
-          </fileset>
+  <include name="**/Barricade.class"/>
+  <include name="**/Barricade$*.class"/>
+  <include name="**/MatrixMap.class"/>
+  <include name="**/MatrixMap$*.class"/>
+</fileset>
+
         </classfiles>
         <sourcefiles>
           <fileset dir="${src.dir}"/>

@@ -17,129 +17,129 @@
             <tr valign="top">
                 <th>Class</th><th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
             </tr>
-            <tr valign="top" class="Error">
-                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="initializationError"></a><a href="/0_BarricadeTest.html#initializationError">initializationError</a></td><td>Error</td><td>org/hamcrest/SelfDescribing
+            <tr valign="top" class="Failure">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testCorrectSize_StateChangingSizeThrows"></a><a href="/0_BarricadeTest.html#testCorrectSize_StateChangingSizeThrows">testCorrectSize_StateChangingSizeThrows</a></td><td>Failure</td><td>Expected exception: java.lang.RuntimeException
                     <br>
                     <br>
-                    <code>java.lang.NoClassDefFoundError: org/hamcrest/SelfDescribing
+                    <code>junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
                         <br>
-                        	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
-                        <br>
-                        	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1027)
-                        <br>
-                        	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:150)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:862)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull(BuiltinClassLoader.java:760)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClassOrNull(BuiltinClassLoader.java:681)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:639)
-                        <br>
-                        	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
-                        <br>
-                        	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
-                        <br>
-                        	at org.junit.internal.builders.JUnit4Builder.runnerForClass(JUnit4Builder.java:10)
-                        <br>
-                        	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-                        <br>
-                        	at org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(AllDefaultPossibilitiesBuilder.java:37)
-                        <br>
-                        	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-                        <br>
-                        	at org.junit.internal.requests.ClassRequest.createRunner(ClassRequest.java:28)
-                        <br>
-                        	at org.junit.internal.requests.MemoizingRequest.getRunner(MemoizingRequest.java:19)
-                        <br>
-                        	at junit.framework.JUnit4TestAdapter.&lt;init&gt;(JUnit4TestAdapter.java:42)
-                        <br>
-                        	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-                        <br>
-                        	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-                        <br>
-                        	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:497)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1197)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1042)
-                        <br>
-                        Caused by: java.lang.ClassNotFoundException: org.hamcrest.SelfDescribing
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
-                        <br>
-                        	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
-                        <br>
-                        	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
-                        <br>
-                        	... 22 more
-                        <br>
-                    </code></td><td>0.006</td>
+                    </code></td><td>0.017</td>
             </tr>
-            <tr valign="top" class="Error">
-                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="initializationError"></a><a href="/1_MatrixMapTest.html#initializationError">initializationError</a></td><td>Error</td><td>org/hamcrest/SelfDescribing
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testGetWithStateVar_IncorrectValueLogged"></a><a href="/0_BarricadeTest.html#testGetWithStateVar_IncorrectValueLogged">testGetWithStateVar_IncorrectValueLogged</a></td><td>Success</td><td></td><td>0.004</td>
+            </tr>
+            <tr valign="top" class="Failure">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testCorrectSize_WrongSizeLogged"></a><a href="/0_BarricadeTest.html#testCorrectSize_WrongSizeLogged">testCorrectSize_WrongSizeLogged</a></td><td>Failure</td><td>expected:&lt;2&gt; but was:&lt;999&gt;
                     <br>
                     <br>
-                    <code>java.lang.NoClassDefFoundError: org/hamcrest/SelfDescribing
+                    <code>junit.framework.AssertionFailedError: expected:&lt;2&gt; but was:&lt;999&gt;
                         <br>
-                        	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
+                        	at BarricadeTest.testCorrectSize_WrongSizeLogged(BarricadeTest.java:87)
                         <br>
-                        	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1027)
+                        	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
                         <br>
-                        	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:150)
+                    </code></td><td>0.002</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testKeySetAndEntrySet"></a><a href="/0_BarricadeTest.html#testKeySetAndEntrySet">testKeySetAndEntrySet</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testCorrectStringRepresentation_WrongStringLogged"></a><a href="/0_BarricadeTest.html#testCorrectStringRepresentation_WrongStringLogged">testCorrectStringRepresentation_WrongStringLogged</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testPutWithStateVar_MisbehavingPutThrows"></a><a href="/0_BarricadeTest.html#testPutWithStateVar_MisbehavingPutThrows">testPutWithStateVar_MisbehavingPutThrows</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testGetPutSizeCorrect"></a><a href="/0_BarricadeTest.html#testGetPutSizeCorrect">testGetPutSizeCorrect</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testConstructor"></a><a href="/0_BarricadeTest.html#testConstructor">testConstructor</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="Failure">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testCorrectStringRepresentation_StateChange"></a><a href="/0_BarricadeTest.html#testCorrectStringRepresentation_StateChange">testCorrectStringRepresentation_StateChange</a></td><td>Failure</td><td>Expected exception: java.lang.RuntimeException
+                    <br>
+                    <br>
+                    <code>junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
                         <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:862)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull(BuiltinClassLoader.java:760)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClassOrNull(BuiltinClassLoader.java:681)
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:639)
-                        <br>
-                        	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
-                        <br>
-                        	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
-                        <br>
-                        	at org.junit.internal.builders.JUnit4Builder.runnerForClass(JUnit4Builder.java:10)
-                        <br>
-                        	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-                        <br>
-                        	at org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(AllDefaultPossibilitiesBuilder.java:37)
-                        <br>
-                        	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:70)
-                        <br>
-                        	at org.junit.internal.requests.ClassRequest.createRunner(ClassRequest.java:28)
-                        <br>
-                        	at org.junit.internal.requests.MemoizingRequest.getRunner(MemoizingRequest.java:19)
-                        <br>
-                        	at junit.framework.JUnit4TestAdapter.&lt;init&gt;(JUnit4TestAdapter.java:42)
-                        <br>
-                        	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-                        <br>
-                        	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-                        <br>
-                        	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:497)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1197)
-                        <br>
-                        	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1042)
-                        <br>
-                        Caused by: java.lang.ClassNotFoundException: org.hamcrest.SelfDescribing
-                        <br>
-                        	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
-                        <br>
-                        	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
-                        <br>
-                        	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
-                        <br>
-                        	... 22 more
-                        <br>
-                    </code></td><td>0.007</td>
+                    </code></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/0_BarricadeTest.html">BarricadeTest</a></td><td><a name="testGetWithStateVar_StateChangingGetThrows"></a><a href="/0_BarricadeTest.html#testGetWithStateVar_StateChangingGetThrows">testGetWithStateVar_StateChangingGetThrows</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testConstant_InvalidSize"></a><a href="/1_MatrixMapTest.html#testConstant_InvalidSize">testConstant_InvalidSize</a></td><td>Success</td><td></td><td>0.005</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testValue_OutOfBounds"></a><a href="/1_MatrixMapTest.html#testValue_OutOfBounds">testValue_OutOfBounds</a></td><td>Success</td><td></td><td>0.019</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_normal"></a><a href="/1_MatrixMapTest.html#testInstance_normal">testInstance_normal</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testMinimalMatrix"></a><a href="/1_MatrixMapTest.html#testMinimalMatrix">testMinimalMatrix</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testConstant_NullValue"></a><a href="/1_MatrixMapTest.html#testConstant_NullValue">testConstant_NullValue</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_Indexes_NullSize"></a><a href="/1_MatrixMapTest.html#testInstance_Indexes_NullSize">testInstance_Indexes_NullSize</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testFrom_raggedArray"></a><a href="/1_MatrixMapTest.html#testFrom_raggedArray">testFrom_raggedArray</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testFrom_normal"></a><a href="/1_MatrixMapTest.html#testFrom_normal">testFrom_normal</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testToStringCheck"></a><a href="/1_MatrixMapTest.html#testToStringCheck">testToStringCheck</a></td><td>Success</td><td></td><td>0.005</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testIdentity_NullZero"></a><a href="/1_MatrixMapTest.html#testIdentity_NullZero">testIdentity_NullZero</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testConstant"></a><a href="/1_MatrixMapTest.html#testConstant">testConstant</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testFrom_emptyInner"></a><a href="/1_MatrixMapTest.html#testFrom_emptyInner">testFrom_emptyInner</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testFrom_emptyOuter"></a><a href="/1_MatrixMapTest.html#testFrom_emptyOuter">testFrom_emptyOuter</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_Indexes_Invalid"></a><a href="/1_MatrixMapTest.html#testInstance_Indexes_Invalid">testInstance_Indexes_Invalid</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testIdentity"></a><a href="/1_MatrixMapTest.html#testIdentity">testIdentity</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testSize_EmptyMatrix"></a><a href="/1_MatrixMapTest.html#testSize_EmptyMatrix">testSize_EmptyMatrix</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testFrom_null"></a><a href="/1_MatrixMapTest.html#testFrom_null">testFrom_null</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_SizeIndexes"></a><a href="/1_MatrixMapTest.html#testInstance_SizeIndexes">testInstance_SizeIndexes</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testIdentity_NullIdentity"></a><a href="/1_MatrixMapTest.html#testIdentity_NullIdentity">testIdentity_NullIdentity</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_NullMapper"></a><a href="/1_MatrixMapTest.html#testInstance_NullMapper">testInstance_NullMapper</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testIdentity_InvalidSize"></a><a href="/1_MatrixMapTest.html#testIdentity_InvalidSize">testIdentity_InvalidSize</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_OneDimensional"></a><a href="/1_MatrixMapTest.html#testInstance_OneDimensional">testInstance_OneDimensional</a></td><td>Success</td><td></td><td>0.002</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_InvalidCols"></a><a href="/1_MatrixMapTest.html#testInstance_InvalidCols">testInstance_InvalidCols</a></td><td>Success</td><td></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testInstance_InvalidRows"></a><a href="/1_MatrixMapTest.html#testInstance_InvalidRows">testInstance_InvalidRows</a></td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a href="/1_MatrixMapTest.html">MatrixMapTest</a></td><td><a name="testValue_NullIndexes"></a><a href="/1_MatrixMapTest.html#testValue_NullIndexes">testValue_NullIndexes</a></td><td>Success</td><td></td><td>0.000</td>
             </tr>
         </table>
     </body>
