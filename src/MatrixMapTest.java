@@ -7,8 +7,7 @@ public class MatrixMapTest {
 
     @Test
     public void testInvalidLengthExceptionGetters() {
-        // This covers getTheCause() and getTheLength():
-        var ex = new MatrixMap.InvalidLengthException(
+        MatrixMap.InvalidLengthException ex = new MatrixMap.InvalidLengthException(
             MatrixMap.InvalidLengthException.Cause.ROW, -99
         );
         assertEquals(MatrixMap.InvalidLengthException.Cause.ROW, ex.getTheCause());
@@ -28,6 +27,7 @@ public class MatrixMapTest {
     @Test
     public void testInstanceIndexesHappyPath() {
         MatrixMap<String> mm = MatrixMap.instance(new Indexes(2,2), i -> i.toString());
+        // For a 2x2 matrix built with indices, (0,1) becomes "(0,1)"
         assertEquals("(0,1)", mm.value(0,1));
     }
 
@@ -49,15 +49,12 @@ public class MatrixMapTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIdentityZeroSize() {
-        // triggers InvalidLengthException logic internally
         MatrixMap.identity(0, 0, 1);
     }
 
     @Test
     public void testIdentityBranchCoverage() {
-        // For size=2, we cover diagonal vs. non-diagonal calls
         MatrixMap<Integer> mm = MatrixMap.identity(2, 0, 9);
-        // (0,0) => 9, (0,1) => 0, (1,1) => 9, etc.
         assertEquals((Integer)9, mm.value(0,0));
         assertEquals((Integer)0, mm.value(0,1));
         assertEquals((Integer)9, mm.value(1,1));
@@ -65,19 +62,14 @@ public class MatrixMapTest {
 
     @Test
     public void testSize_EmptyMapCase() {
-        // If the matrix has no keys at all, size() returns ORIGIN.
-        // We can create an empty matrix by skipping build. 
-        // Easiest hack: create 1x1 but remove the keys by reflection. 
         MatrixMap<Integer> mm = MatrixMap.constant(1, 99);
-
         try {
             Field f = mm.getClass().getDeclaredField("matrix");
             f.setAccessible(true);
             @SuppressWarnings("unchecked")
             Map<Indexes, Integer> actualMap = (Map<Indexes, Integer>) f.get(mm);
-            actualMap.clear();  // now truly empty
-
-            Indexes s = mm.size(); // hits the "if (!iterator.hasNext())" path
+            actualMap.clear();
+            Indexes s = mm.size();
             assertEquals(0, s.row());
             assertEquals(0, s.column());
         } catch (Exception e) {
@@ -86,10 +78,78 @@ public class MatrixMapTest {
     }
 
     @Test
-    public void testSizeBranchCoverage() {
-        // Normal matrix with multiple keys
-        MatrixMap<String> mm = MatrixMap.constant(2, "X"); 
-        // The final row & column is (1,1), so size is (2,2)
+    public void testSize_NormalMatrix() {
+        MatrixMap<Integer> mm = MatrixMap.constant(2, 99);
+        Indexes s = mm.size();
+        assertEquals(2, s.row());
+        assertEquals(2, s.column());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testFrom_Null() {
+        MatrixMap.from(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFrom_ZeroRow() {
+        MatrixMap.from(new Integer[0][0]);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFrom_ZeroColumn() {
+        MatrixMap.from(new Integer[][] { {} });
+    }
+
+    @Test
+    public void testFrom_Valid() {
+        Integer[][] arr = { {10,20}, {30,40} };
+        MatrixMap<Integer> mm = MatrixMap.from(arr);
+        assertEquals((Integer)10, mm.value(0,0));
+        assertEquals((Integer)20, mm.value(0,1));
+        assertEquals((Integer)30, mm.value(1,0));
+        assertEquals((Integer)40, mm.value(1,1));
+    }
+
+    @Test
+    public void testMatrixMapToString() {
+        MatrixMap<Integer> mm = MatrixMap.constant(2, 99);
+        String s = mm.toString();
+        assertNotNull(s);
+        assertTrue(s.contains("99"));
+    }
+
+    @Test
+    public void testSize_EmptyMatrix() throws Exception {
+        MatrixMap<String> mm = MatrixMap.constant(1, "X");
+        Field f = MatrixMap.class.getDeclaredField("matrix");
+        f.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        Map<Indexes, String> underlying = (Map<Indexes, String>) f.get(mm);
+        underlying.clear();
+        Indexes s = mm.size();
+        assertEquals(0, s.row());
+        assertEquals(0, s.column());
+    }
+
+    @Test
+    public void testSize_IfBranchFalse() throws Exception {
+        Comparator<Indexes> descending = (a, b) -> b.compareTo(a);
+        TreeMap<Indexes, String> descMap = new TreeMap<>(descending);
+        descMap.put(new Indexes(3, 3), "A");
+        descMap.put(new Indexes(1, 1), "B");
+        descMap.put(new Indexes(0, 0), "C");
+        MatrixMap<String> mm = MatrixMap.constant(1, "X");
+        Field f = MatrixMap.class.getDeclaredField("matrix");
+        f.setAccessible(true);
+        f.set(mm, descMap);
+        Indexes s = mm.size();
+        assertEquals(4, s.row());
+        assertEquals(4, s.column());
+    }
+
+    @Test
+    public void testSize_IfBranchTrue() {
+        MatrixMap<String> mm = MatrixMap.constant(2, "X");
         Indexes s = mm.size();
         assertEquals(2, s.row());
         assertEquals(2, s.column());
@@ -97,71 +157,7 @@ public class MatrixMapTest {
 
     @Test
     public void testConstructor() {
-        // Just some coverage for the MatrixMap constructor path
-        // (Though typically it's private, we use from(...) or instance(...) to build.)
         MatrixMap<String> mm = MatrixMap.constant(1, "Test");
         assertEquals("Test", mm.value(0,0));
     }
-
-    @Test
-public void testSize_EmptyMatrix() throws Exception {
-    // Build a 1x1 matrix, then remove the key by reflection => truly empty
-    MatrixMap<String> mm = MatrixMap.constant(1, "X");
-
-    Field f = MatrixMap.class.getDeclaredField("matrix");
-    f.setAccessible(true);
-    @SuppressWarnings("unchecked")
-    Map<Indexes, String> underlying = (Map<Indexes, String>) f.get(mm);
-    underlying.clear();  // now there are 0 keys
-
-    // Now size() should see that there's no next() in the iterator
-    Indexes s = mm.size();
-    // Typically that means row=0, col=0
-    assertEquals(0, s.row());
-    assertEquals(0, s.column());
-}
-
-@Test
-public void testSize_NormalMatrix() {
-    MatrixMap<Integer> mm = MatrixMap.constant(2, 99);
-    Indexes s = mm.size();
-    // 2x2 => row=2, col=2
-    assertEquals(2, s.row());
-    assertEquals(2, s.column());
-}
-
-@Test(expected = NullPointerException.class)
-public void testFrom_Null() {
-    MatrixMap.from(null); // triggers Objects.requireNonNull(matrix)
-}
-
-@Test(expected = IllegalArgumentException.class)
-public void testFrom_ZeroRow() {
-    MatrixMap.from(new Integer[0][0]); // triggers requireNonEmpty for row
-}
-
-@Test(expected = IllegalArgumentException.class)
-public void testFrom_ZeroColumn() {
-    MatrixMap.from(new Integer[][] { {} }); // triggers requireNonEmpty for column
-}
-
-@Test
-public void testFrom_Valid() {
-    // Non-empty array
-    Integer[][] arr = {
-        {10, 20},
-        {30, 40}
-    };
-    MatrixMap<Integer> mm = MatrixMap.from(arr);
-
-    // Actually read back some values to ensure we fully execute "indexes -> indexes.value(matrix)"
-    assertEquals((Integer)10, mm.value(0,0));
-    assertEquals((Integer)20, mm.value(0,1));
-    assertEquals((Integer)30, mm.value(1,0));
-    assertEquals((Integer)40, mm.value(1,1));
-}
-
-
-    // ... (and you keep the original tests from before, such as testFromValid, testConstantValid, etc.)
-
 }

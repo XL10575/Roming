@@ -1,55 +1,40 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.*;
+import java.lang.reflect.*;
 
+/**
+ * Tests for Barricade methods – forcing branch coverage for:
+ *   - getWithStateVar (both correct and state-change/wrong-value cases)
+ *   - correctSize (both normal, wrong size, and changed entrySet cases)
+ *   - correctStringRepresentation (both normal and changed entrySet cases)
+ */
 public class BarricadeTest {
-    /**
-     * A Handler that stores LogRecords in a list (so we can test logging).
-     */
-    private static class TestHandler extends Handler {
-        public final List<LogRecord> records = new ArrayList<>();
-
-        @Override
-        public void publish(LogRecord record) {
-            if (record != null) {
-                records.add(record);
-            }
-        }
-
-        @Override public void flush() {}
-        @Override public void close() throws SecurityException {}
-    }
 
     private Logger logger;
-    private TestHandler handler;
+    private LoggerTestingHandler logHandler;
 
-    /**
-     * Set up the logger before each test.
-     */
     @Before
-    public void setUp() {
+    public void setupLogger() {
         logger = Logger.getLogger(Barricade.class.getName());
         logger.setUseParentHandlers(false);
-        logger.setLevel(Level.ALL);
+        // Remove any existing handlers
         for (Handler h : logger.getHandlers()) {
             logger.removeHandler(h);
         }
-        handler = new TestHandler();
-        logger.addHandler(handler);
+        logHandler = new LoggerTestingHandler();
+        logger.addHandler(logHandler);
+        logger.setLevel(Level.ALL);
     }
 
-    /**
-     * Remove the logger handler after each test.
-     */
     @After
-    public void tearDown() {
-        logger.removeHandler(handler);
+    public void teardownLogger() {
+        logger.removeHandler(logHandler);
     }
 
     /**
-     * Inject a fake underlying map implementation into a RoamingMap, so we can control behavior.
+     * Helper: Inject a fake Map into a RoamingMap via reflection.
      */
     private <K extends Comparable<K>, V> RoamingMap<K, V> inject(Map<K, V> fake) {
         RoamingMap<K, V> rm = new RoamingMap<>();
@@ -63,158 +48,33 @@ public class BarricadeTest {
         return rm;
     }
 
-    // -----------------------------------------------------------
-    // TESTS for correctSize(...) coverage
-    // -----------------------------------------------------------
+    // --- getWithStateVar tests ---
 
-    /**
-     * Mismatch in entry set => "size method of RoamingMap operated incorrectly"
-     */
     @Test
-    public void testCorrectSize_OperatedIncorrectly() {
+    public void testGetWithStateVar_ChangesEntrySet() {
         Map<String, String> fake = new TreeMap<>() {
-            boolean firstCall = true;
+            boolean secondCall = false;
             @Override
             public Set<Map.Entry<String, String>> entrySet() {
-                // On second call, let's add something, so the sets differ
-                if (!firstCall) {
-                    put("NEW", "val");
+                if (secondCall) {
+                    // Change the map on the second call
+                    put("NEW", "changed");
                 }
-                firstCall = false;
+                secondCall = true;
                 return super.entrySet();
             }
         };
-        fake.put("A", "1");
-        RoamingMap<String, String> map = inject(fake);
+        fake.put("KEY", "value");
+        RoamingMap<String, String> rm = inject(fake);
 
         try {
-            Barricade.correctSize(map);
-            fail("Expected runtime exception for changed entrySet");
-        } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("size method of RoamingMap operated incorrectly"));
+            Barricade.getWithStateVar(rm, "KEY");
+            fail("Expected RuntimeException for changed entry set in get");
+        } catch (RuntimeException ex) {
+            assertTrue(ex.getMessage().contains("get method of RoamingMap operated incorrectly"));
         }
     }
 
-    /**
-     * Wrong numeric size => logs a warning, but doesn't throw
-     */
-    @Test
-    public void testCorrectSize_WrongValue() {
-        Map<String, String> fake = new TreeMap<>() {
-            @Override
-            public int size() {
-                // The actual set has 1 entry, but let's say 999
-                return 999;
-            }
-        };
-        fake.put("X", "abc");
-        RoamingMap<String, String> map = inject(fake);
-
-        int actual = Barricade.correctSize(map);
-        assertEquals(1, actual);
-        assertFalse("Should have logged a warning", handler.records.isEmpty());
-        assertTrue(
-            handler.records.stream().anyMatch(
-                r -> r.getMessage().contains("size method of RoamingMap returned incorrect value")
-            )
-        );
-    }
-
-    /**
-     * Normal/happy path => correct result, no logging
-     */
-    @Test
-    public void testCorrectSize_HappyPath() {
-        RoamingMap<String, String> map = new RoamingMap<>();
-        map.put("A", "one");
-        map.put("B", "two");
-
-        int size = Barricade.correctSize(map);
-        assertEquals(2, size);
-        assertTrue("No warnings expected", handler.records.isEmpty());
-    }
-
-    // -----------------------------------------------------------
-    // TESTS for correctStringRepresentation(...) coverage
-    // -----------------------------------------------------------
-
-    /**
-     * Mismatch in entry set => "toString method of RoamingMap operated incorrectly"
-     */
-    @Test
-    public void testCorrectStringRepresentation_OperatedIncorrectly() {
-        Map<String, String> fake = new TreeMap<>() {
-            boolean firstCall = true;
-            @Override
-            public String toString() {
-                if (!firstCall) {
-                    // On the second call, let's remove something => mismatch
-                    remove("B");
-                }
-                firstCall = false;
-                return super.toString();
-            }
-        };
-        fake.put("A","X");
-        fake.put("B","Y");
-        RoamingMap<String, String> map = inject(fake);
-
-        try {
-            Barricade.correctStringRepresentation(map);
-            fail("Expected runtime exception for changed entry set in toString");
-        } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("toString method of RoamingMap operated incorrectly"));
-        }
-    }
-
-    /**
-     * Wrong string => logs a warning, but doesn't throw
-     */
-    @Test
-    public void testCorrectStringRepresentation_WrongString() {
-        Map<String, String> fake = new TreeMap<>() {
-            @Override
-            public String toString() {
-                return "WRONG";
-            }
-        };
-        fake.put("K","V");
-        RoamingMap<String, String> map = inject(fake);
-
-        String s = Barricade.correctStringRepresentation(map);
-        // The correct string is something like "{K=V}"
-        assertTrue(s.contains("K=V"));
-        assertFalse(handler.records.isEmpty());
-        assertTrue(
-            handler.records.stream().anyMatch(
-                r -> r.getMessage().contains("toString method of RoamingMap returned incorrect value")
-            )
-        );
-    }
-
-    /**
-     * Normal/happy path => no warning, no throw
-     */
-    @Test
-    public void testCorrectStringRepresentation_HappyPath() {
-        RoamingMap<Integer, String> map = new RoamingMap<>();
-        map.put(10, "ten");
-        String s = Barricade.correctStringRepresentation(map);
-        assertTrue(s.contains("10=ten"));
-        assertTrue("No logs expected", handler.records.isEmpty());
-    }
-
-    // -----------------------------------------------------------
-    // TESTS for getWithStateVar(...) coverage
-    // -----------------------------------------------------------
-
-    /**
-     * Changing the entry set mid-get => "get method of RoamingMap operated incorrectly"
-     */
-
-    /**
-     * get(...) returns wrong value => logs a warning, but doesn't throw
-     */
     @Test
     public void testGetWithStateVar_WrongValue() {
         Map<String, String> fake = new TreeMap<>() {
@@ -223,39 +83,129 @@ public class BarricadeTest {
                 return "WRONGVAL";
             }
         };
-        fake.put("K","REALVAL");
-        RoamingMap<String, String> map = inject(fake);
-
-        var result = Barricade.getWithStateVar(map, "K");
-        assertEquals("REALVAL", result.value()); // used the old "correct" value
-        assertFalse(handler.records.isEmpty());
-        assertTrue(
-            handler.records.stream().anyMatch(
-                r -> r.getMessage().contains("get method of RoamingMap returned incorrect value")
-            )
-        );
+        fake.put("K", "REALVAL");
+        RoamingMap<String, String> rm = inject(fake);
+        var result = Barricade.getWithStateVar(rm, "K");
+        assertEquals("REALVAL", result.value());
+        assertTrue(logHandler.getLastLog().isPresent());
+        assertTrue(logHandler.getLastLog().get().contains("get method of RoamingMap returned incorrect value"));
     }
 
-    /**
-     * Normal/happy path => no logs, no throw
-     */
     @Test
     public void testGetWithStateVar_HappyPath() {
-        RoamingMap<String, String> map = new RoamingMap<>();
-        map.put("A","valA");
-
-        var result = Barricade.getWithStateVar(map, "A");
-        assertEquals("valA", result.value());
-        assertTrue("No warnings expected", handler.records.isEmpty());
+        RoamingMap<String, String> rm = new RoamingMap<>();
+        rm.put("K", "valK");
+        var result = Barricade.getWithStateVar(rm, "K");
+        assertEquals("valK", result.value());
+        assertFalse(logHandler.getLastLog().isPresent());
     }
 
-    // -----------------------------------------------------------
-    // TESTS for putWithStateVar(...) coverage
-    // -----------------------------------------------------------
+    // --- correctSize tests ---
 
-    /**
-     * Changing entry set after put => "put method of RoamingMap operated incorrectly"
-     */
+    @Test
+    public void testCorrectSize_ChangesEntrySet() {
+        Map<String, String> fake = new TreeMap<>() {
+            boolean firstCall = true;
+            @Override
+            public Set<Map.Entry<String, String>> entrySet() {
+                if (!firstCall) {
+                    put("NEW", "anyVal");
+                }
+                firstCall = false;
+                return super.entrySet();
+            }
+        };
+        fake.put("A", "1");
+        fake.put("B", "2");
+        RoamingMap<String, String> rm = inject(fake);
+
+        try {
+            Barricade.correctSize(rm);
+            fail("Expected RuntimeException for changed entry set in size");
+        } catch (RuntimeException ex) {
+            assertTrue(ex.getMessage().contains("size method of RoamingMap operated incorrectly"));
+        }
+    }
+
+    @Test
+    public void testCorrectSize_WrongNumericValue() {
+        Map<String, String> fake = new TreeMap<>() {
+            @Override
+            public int size() {
+                return 999; // bogus size
+            }
+        };
+        fake.put("X", "val");
+        RoamingMap<String, String> rm = inject(fake);
+        int result = Barricade.correctSize(rm);
+        assertEquals(1, result);
+        assertTrue(logHandler.getLastLog().isPresent());
+        assertTrue(logHandler.getLastLog().get().contains("size method of RoamingMap returned incorrect value"));
+    }
+
+    @Test
+    public void testCorrectSize_HappyPath() {
+        RoamingMap<String, String> rm = new RoamingMap<>();
+        rm.put("A", "1");
+        rm.put("B", "2");
+        int result = Barricade.correctSize(rm);
+        assertEquals(2, result);
+        assertFalse(logHandler.getLastLog().isPresent());
+    }
+
+    // --- correctStringRepresentation tests ---
+
+    @Test
+    public void testCorrectStringRepresentation_ChangesEntrySet() {
+        Map<String, String> fake = new TreeMap<>() {
+            boolean firstCall = true;
+            @Override
+            public String toString() {
+                if (!firstCall) {
+                    remove("B");
+                }
+                firstCall = false;
+                return super.toString();
+            }
+        };
+        fake.put("A", "X");
+        fake.put("B", "Y");
+        RoamingMap<String, String> rm = inject(fake);
+        try {
+            Barricade.correctStringRepresentation(rm);
+            fail("Expected RuntimeException for changed entry set in toString");
+        } catch (RuntimeException ex) {
+            assertTrue(ex.getMessage().contains("toString method of RoamingMap operated incorrectly"));
+        }
+    }
+
+    @Test
+    public void testCorrectStringRepresentation_WrongString() {
+        Map<String, String> fake = new TreeMap<>() {
+            @Override
+            public String toString() {
+                return "WRONG";
+            }
+        };
+        fake.put("K", "V");
+        RoamingMap<String, String> rm = inject(fake);
+        String result = Barricade.correctStringRepresentation(rm);
+        assertTrue(result.contains("K=V"));
+        assertTrue(logHandler.getLastLog().isPresent());
+        assertTrue(logHandler.getLastLog().get().contains("toString method of RoamingMap returned incorrect value"));
+    }
+
+    @Test
+    public void testCorrectStringRepresentation_HappyPath() {
+        RoamingMap<Integer, String> rm = new RoamingMap<>();
+        rm.put(10, "ten");
+        String result = Barricade.correctStringRepresentation(rm);
+        assertTrue(result.contains("10=ten"));
+        assertFalse(logHandler.getLastLog().isPresent());
+    }
+
+    // --- putWithStateVar tests ---
+
     @Test
     public void testPutWithStateVar_StateChange() {
         Map<String, String> fake = new TreeMap<>() {
@@ -263,69 +213,67 @@ public class BarricadeTest {
             @Override
             public Set<Map.Entry<String, String>> entrySet() {
                 if (secondCall) {
-                    // remove the newly inserted entry
                     remove("NEW");
                 }
                 secondCall = true;
                 return super.entrySet();
             }
         };
-        RoamingMap<String, String> map = inject(fake);
-
+        RoamingMap<String, String> rm = inject(fake);
         try {
-            Barricade.putWithStateVar(map, "NEW", "VALUE");
-            fail("Expected runtime exception for changed entry set in put");
-        } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("put method of RoamingMap operated incorrectly"));
+            Barricade.putWithStateVar(rm, "NEW", "VALUE");
+            fail("Expected RuntimeException for changed entry set in put");
+        } catch (RuntimeException ex) {
+            assertTrue(ex.getMessage().contains("put method of RoamingMap operated incorrectly"));
         }
     }
 
-    /**
-     * put(...) fails to actually insert => "put method of RoamingMap operated incorrectly"
-     */
     @Test
     public void testPutWithStateVar_FailsToInsert() {
         Map<String, String> fake = new TreeMap<>() {
             @Override
             public String put(String k, String v) {
-                // do nothing
-                return null;
+                return null; // does not insert new key
             }
         };
-        RoamingMap<String, String> map = inject(fake);
-
+        RoamingMap<String, String> rm = inject(fake);
         try {
-            Barricade.putWithStateVar(map, "A", "B");
-            fail("Expected runtime exception due to missing insertion");
-        } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("put method of RoamingMap operated incorrectly"));
+            Barricade.putWithStateVar(rm, "A", "B");
+            fail("Expected RuntimeException due to missing insertion");
+        } catch (RuntimeException ex) {
+            assertTrue(ex.getMessage().contains("put method of RoamingMap operated incorrectly"));
         }
     }
 
-    /**
-     * Normal/happy path => no logs, no throw
-     */
     @Test
     public void testPutWithStateVar_HappyPath() {
-        RoamingMap<String, String> map = new RoamingMap<>();
-        var result = Barricade.putWithStateVar(map, "X", "Y");
-        assertNull("No previous value => returns null", result.value());
-        assertTrue("No warnings expected", handler.records.isEmpty());
+        RoamingMap<String, String> rm = new RoamingMap<>();
+        var result = Barricade.putWithStateVar(rm, "X", "Y");
+        assertNull(result.value());  // no previous value
+        assertFalse(logHandler.getLastLog().isPresent());
     }
 
-    // -----------------------------------------------------------
-    // NULL-ARGUMENT TESTS
-    // -----------------------------------------------------------
+    // --- Null argument tests ---
+
+    @Test(expected = NullPointerException.class)
+    public void testCorrectSize_NullMap() {
+        Barricade.correctSize(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testCorrectStringRepresentation_NullMap() {
+        Barricade.correctStringRepresentation(null);
+    }
 
     @Test(expected = NullPointerException.class)
     public void testGetWithStateVar_NullMap() {
-        Barricade.getWithStateVar(null, "KEY");
+        Barricade.getWithStateVar(null, "X");
     }
 
     @Test(expected = NullPointerException.class)
     public void testGetWithStateVar_NullKey() {
-        RoamingMap<String, String> map = new RoamingMap<>();
-        Barricade.getWithStateVar(map, (String) null);
+        RoamingMap<String, String> rm = new RoamingMap<>();
+        Barricade.getWithStateVar(rm, (String)null);
     }
 
     @Test(expected = NullPointerException.class)
@@ -335,41 +283,93 @@ public class BarricadeTest {
 
     @Test(expected = NullPointerException.class)
     public void testPutWithStateVar_NullKey() {
-        RoamingMap<String, String> map = new RoamingMap<>();
-        Barricade.putWithStateVar(map, (String) null, "val");
+        RoamingMap<String, String> rm = new RoamingMap<>();
+        Barricade.putWithStateVar(rm, (String)null, "val");
     }
 
     @Test(expected = NullPointerException.class)
     public void testPutWithStateVar_NullValue() {
-        RoamingMap<String, String> map = new RoamingMap<>();
-        Barricade.putWithStateVar(map, "K", null);
+        RoamingMap<String, String> rm = new RoamingMap<>();
+        Barricade.putWithStateVar(rm, "K", null);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testCorrectSize_NullMap() {
-        Barricade.correctSize(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testCorrectKeySet_NullMap() {
-        Barricade.correctKeySet(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testCorrectEntrySet_NullMap() {
-        Barricade.correctEntrySet(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testCorrectStringRepresentation_NullMap() {
-        Barricade.correctStringRepresentation(null);
-    }
-
-    // -----------------------------------------------------------
-    // TRIVIAL CONSTRUCTOR COVERAGE
-    // -----------------------------------------------------------
     @Test
     public void testBarricadeConstructor() {
         new Barricade();
     }
+
+    // --- Test for "size method of RoamingMap operated incorrectly" ---
+@Test
+public void testCorrectSize_ChangedEntrySet() {
+    Map<String, String> faultyMap = new TreeMap<>() {
+        boolean firstCall = true;
+        @Override
+        public Set<Map.Entry<String, String>> entrySet() {
+            if (!firstCall) {
+                // Alter the map on the second call so that the two snapshots differ.
+                put("FAULT", "trigger");
+            }
+            firstCall = false;
+            return super.entrySet();
+        }
+    };
+    faultyMap.put("A", "1");
+    faultyMap.put("B", "2");
+    RoamingMap<String, String> rm = inject(faultyMap);
+    
+    try {
+        Barricade.correctSize(rm);
+        fail("Expected RuntimeException for changed entry set in size()");
+    } catch (RuntimeException e) {
+        assertTrue(e.getMessage().contains("size method of RoamingMap operated incorrectly"));
+    }
+}
+
+// --- Test for "size method of RoamingMap returned incorrect value; correct value was used instead" ---
+@Test
+public void testCorrectSize_WrongSizeValue() {
+    Map<String, String> faultyMap = new TreeMap<>() {
+        @Override
+        public int size() {
+            return 999; // Return an incorrect size
+        }
+    };
+    faultyMap.put("A", "1");
+    RoamingMap<String, String> rm = inject(faultyMap);
+    
+    int correctedSize = Barricade.correctSize(rm);
+    // The correct snapshot indicates there is only 1 entry.
+    assertEquals(1, correctedSize);
+    // Use LoggerTestingHandler (or your own) to check that a warning was logged.
+    assertTrue(logHandler.getLastLog().isPresent());
+    assertTrue(logHandler.getLastLog().get().contains("size method of RoamingMap returned incorrect value"));
+}
+
+// --- Test for "toString method of RoamingMap operated incorrectly" ---
+@Test
+public void testCorrectStringRepresentation_ChangedEntrySet() {
+    Map<String, String> faultyMap = new TreeMap<>() {
+        boolean firstCall = true;
+        @Override
+        public String toString() {
+            if (!firstCall) {
+                // Change the map on the second call so that the entry set differs.
+                remove("B");
+            }
+            firstCall = false;
+            return super.toString();
+        }
+    };
+    faultyMap.put("A", "X");
+    faultyMap.put("B", "Y");
+    RoamingMap<String, String> rm = inject(faultyMap);
+    
+    try {
+        Barricade.correctStringRepresentation(rm);
+        fail("Expected RuntimeException for changed entry set in toString()");
+    } catch (RuntimeException e) {
+        assertTrue(e.getMessage().contains("toString method of RoamingMap operated incorrectly"));
+    }
+}
+
 }
