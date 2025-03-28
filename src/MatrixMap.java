@@ -1,65 +1,20 @@
 import java.util.*;
 import java.util.function.Function;
 
-// May contain bug(s)
 public final class MatrixMap<T> {
 
-    /**
-     * The InvalidException class is an Exception subclass to solve the problem when the length is not positive
-     */
     public static class InvalidLengthException extends Exception {
-        /**
-         * The Enum Cause with ROW and COLUMN to show which causes the problem when the length is not positive
-         */
-        public enum Cause {
-            ROW,
-            COLUMN
-        }
-
-        /**
-         * The cause of the problem (either ROW or COLUMN)
-         */
+        public enum Cause { ROW, COLUMN }
         private final Cause cause;
-
-        /**
-         * The length associated with the problem
-         */
         private final int length;
-
-        /**
-         * Initializes with input cause and length
-         * @param cause the cause of the problem (either ROW or COLUMN)
-         * @param length the length associated with the problem
-         */
         public InvalidLengthException(Cause cause, int length) {
             this.cause = cause;
             this.length = length;
         }
-
-        /**
-         * Returns the cause of the problem (either ROW or COLUMN)
-         * @return the cause of the problem (either ROW or COLUMN)
-         */
-        public Cause getTheCause() {
-            return cause;
-        }
-
-        /**
-         * Returns the length associated with the problem
-         * @return the length associated with the problem
-         */
-        public int getTheLength() {
-            return length;
-        }
-
-        /**
-         * Throws IllegalArgumentException exception caused by InvalidLengthException exception with input cause and length if length is not positive, returns length otherwise
-         * @param cause the cause of the problem (either ROW or COLUMN)
-         * @param length the length associated with the problem
-         * @return length if length is positive
-         */
+        public Cause getTheCause() { return cause; }
+        public int getTheLength() { return length; }
         public static int requireNonEmpty(Cause cause, int length) {
-            if(length <= 0) {
+            if (length <= 0) {
                 throw new IllegalArgumentException(new InvalidLengthException(cause, length));
             }
             return length;
@@ -67,25 +22,16 @@ public final class MatrixMap<T> {
     }
 
     /**
-     * The matrix for this MatrixMap instance
+     * The underlying matrix data (a RoamingMap from Indexes to T)
      */
     private final RoamingMap<Indexes, T> matrix;
 
-    /**
-     * Initializes with the input matrix
-     * @param matrix the matrix used to initialize
-     */
     private MatrixMap(RoamingMap<Indexes, T> matrix) {
         this.matrix = matrix;
     }
 
-    /**
-     * Returns the MatrixMap instance with matrix that has size of rows x columns and values determined by valueMapper
-     * @param rows the number of rows in the matrix
-     * @param columns the number of columns in the matrix
-     * @param valueMapper the function that maps the indexes to the corresponding value
-     * @return the MatrixMap instance with matrix that has size of rows x columns and values determined by valueMapper
-     * @param <S> the generic type
+    /** 
+     * Returns a MatrixMap with given rows and columns, using valueMapper to generate values.
      */
     public static <S> MatrixMap<S> instance(int rows, int columns, Function<Indexes, S> valueMapper) {
         Objects.requireNonNull(valueMapper);
@@ -94,11 +40,7 @@ public final class MatrixMap<T> {
     }
 
     /**
-     * Returns the MatrixMap instance with matrix that has size of size's row x size's column and value determined by valueMapper
-     * @param size the indexes with row and column as matrix's number of rows and number of columns respectively
-     * @param valueMapper the function that maps the indexes to the corresponding value
-     * @return the MatrixMap instance with matrix that has size of size's row x size's column and value determined by valueMapper
-     * @param <S> the generic type
+     * Returns a MatrixMap with size specified by the given Indexes (row count and column count).
      */
     public static <S> MatrixMap<S> instance(Indexes size, Function<Indexes, S> valueMapper) {
         Objects.requireNonNull(size);
@@ -108,11 +50,7 @@ public final class MatrixMap<T> {
     }
 
     /**
-     * Returns the MatrixMap instance with matrix that has size defined by input size and all values being the input value
-     * @param size the size to define the matrix's size
-     * @param value the value corresponding to all indexes of the matrix
-     * @return the MatrixMap instance with matrix that has size defined by input size and all values being the input value
-     * @param <S> the generic type
+     * Returns an N x N MatrixMap with all entries equal to the given value.
      */
     public static <S> MatrixMap<S> constant(int size, S value) {
         Objects.requireNonNull(value);
@@ -120,49 +58,44 @@ public final class MatrixMap<T> {
     }
 
     /**
-     * Returns the Matrix instance with matrix that has size defined by input size, all values in diagonal indexes as identity, all other values as zero
-     * @param size the size to define the matrix's size
-     * @param zero the zero value for element of type S
-     * @param identity the identity value for element of type S
-     * @return the Matrix instance with matrix that has size defined by input size, all values in diagonal indexes as identity, all other values as zero
-     * @param <S> the generic type
+     * Returns an N x N identity MatrixMap: identity value on diagonal, zero value elsewhere.
      */
     public static <S> MatrixMap<S> identity(int size, S zero, S identity) {
         Objects.requireNonNull(zero);
         Objects.requireNonNull(identity);
-        return instance(size, size, indexes -> (!indexes.areDiagonal() ? identity : zero));
+        return instance(size, size, indexes -> (indexes.areDiagonal() ? identity : zero));
     }
 
     /**
-     * Returns MatrixMap instance with matrix that has corresponding values in input matrix
-     * @param matrix the input matrix used to create the MatrixMap instance with matrix that has corresponding values
-     * @return MatrixMap instance with matrix that has corresponding values in input matrix
-     * @param <S> the generic type
+     * Constructs a MatrixMap from a 2D array.
+     * The resulting MatrixMap has size [matrix.length x matrix[0].length] with corresponding values.
      */
     public static <S> MatrixMap<S> from(S[][] matrix) {
         Objects.requireNonNull(matrix);
-        int columns = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.COLUMN, matrix.length);
-        int rows = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.ROW, matrix[0].length);
-        return instance(rows, columns, indexes -> indexes.value(matrix));
+        int rows = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.ROW, matrix.length);
+        int columns = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.COLUMN, matrix[0].length);
+        RoamingMap<Indexes, S> mapData = buildMatrix(rows, columns, indexes -> indexes.value(matrix));
+        return new MatrixMap<>(mapData);
     }
 
     /**
-     * Returns the indexes with row and column as number of rows and number of columns of the matrix respectively
-     * @return the indexes with row and column as number of rows and number of columns of the matrix respectively
+     * @return Indexes with row = number of rows, column = number of columns in this matrix
      */
     public Indexes size() {
         Iterator<Indexes> iterator = Barricade.correctKeySet(matrix).iterator();
-        Indexes size = iterator.next();
-        while(iterator.hasNext()) {
-            Indexes currentIndex = iterator.next();
-            size = (size.compareTo(currentIndex) < 0) ? iterator.next() : currentIndex;
+        // Find the maximum index (largest row and column)
+        Indexes maxIndex = iterator.hasNext() ? iterator.next() : Indexes.ORIGIN;
+        while (iterator.hasNext()) {
+            Indexes current = iterator.next();
+            if (current.compareTo(maxIndex) > 0) {
+                maxIndex = current;
+            }
         }
-        return new Indexes(size.row() + 1, size.column() + 1);
+        return new Indexes(maxIndex.row() + 1, maxIndex.column() + 1);
     }
 
     /**
-     * Returns the String representation of the matrix
-     * @return the String representation of the matrix
+     * @return a String representation of the matrix (uses Barricade to ensure correctness)
      */
     @Override
     public String toString() {
@@ -170,9 +103,9 @@ public final class MatrixMap<T> {
     }
 
     /**
-     * Returns the value corresponding to the input indexes
-     * @param indexes the input indexes used to find the corresponding value
-     * @return the value corresponding to the input indexes
+     * Retrieves the value at the given matrix indexes.
+     * @param indexes the index pair
+     * @return the value at that position in the matrix
      */
     public T value(Indexes indexes) {
         Objects.requireNonNull(indexes);
@@ -180,31 +113,24 @@ public final class MatrixMap<T> {
     }
 
     /**
-     * Returns the value corresponding to the indexes with input row and column
-     * @param row the row of the indexes
-     * @param column the column of the indexes
-     * @return the value corresponding to the indexes with input row and column
+     * Convenience method to retrieve the value at (row, column).
      */
     public T value(int row, int column) {
         return value(new Indexes(row, column));
     }
 
     /**
-     * Builds and returns the matrix with rows and columns as number of rows and number of columns respectively and values determined by valueMapper
-     * @param rows the number of rows of the matrix
-     * @param columns the number of columns of the matrix
-     * @param valueMapper the function that maps the indexes to the corresponding value
-     * @return the matrix with rows and columns as number of rows and number of columns respectively and values determined by valueMapper
-     * @param <S> the generic type
+     * Builds the internal matrix (RoamingMap from Indexes to S) of given dimensions using valueMapper.
      */
     private static <S> RoamingMap<Indexes, S> buildMatrix(int rows, int columns, Function<Indexes, S> valueMapper) {
         int rowsNumber = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.ROW, rows);
         int columnsNumber = InvalidLengthException.requireNonEmpty(InvalidLengthException.Cause.COLUMN, columns);
         RoamingMap<Indexes, S> matrix = new RoamingMap<>();
-        Indexes.stream(rowsNumber - 2, columnsNumber - 2).forEach(indexes -> {
-                S value = valueMapper.apply(indexes);
-                Barricade.putWithStateVar(matrix, indexes, value);
-            });
+        // Populate all indices from (0,0) to (rowsNumber-1, columnsNumber-1)
+        Indexes.stream(rowsNumber - 1, columnsNumber - 1).forEach(indexes -> {
+            S value = valueMapper.apply(indexes);
+            Barricade.putWithStateVar(matrix, indexes, value);
+        });
         return matrix;
     }
 }

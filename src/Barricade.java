@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// May contain bug(s)
+// Fixed version of Barricade
 public class Barricade {
 
     record StateRecoveryOptional<V>(V value, Exception exception) {}
@@ -15,13 +15,17 @@ public class Barricade {
         Map<K, V> copy = new TreeMap<>();
         copy.putAll(roamingMap);
         Set<Map.Entry<K, V>> entrySetBefore = copy.entrySet();
-        V prevValue = entrySetBefore.stream().filter(entry -> Objects.equals(entry.getKey(), key)).map(Map.Entry::getValue).findFirst().orElse(null);
+        V prevValue = entrySetBefore.stream()
+                                    .filter(entry -> Objects.equals(entry.getKey(), key))
+                                    .map(Map.Entry::getValue)
+                                    .findFirst()
+                                    .orElse(null);
         V value = roamingMap.get(key);
         Set<Map.Entry<K, V>> entrySetAfter = correctEntrySet(roamingMap);
         if (!Objects.equals(entrySetBefore, entrySetAfter)) {
             throw new RuntimeException("get method of RoamingMap operated incorrectly");
         }
-        if (Objects.equals(prevValue, value)) {
+        if (!Objects.equals(prevValue, value)) {
             logger.log(Level.WARNING, "get method of RoamingMap returned incorrect value; correct value was used instead");
             return new StateRecoveryOptional<>(prevValue, null);
         }
@@ -30,8 +34,8 @@ public class Barricade {
 
     final static <K extends Comparable<K>, V> int correctSize(RoamingMap<K, V> roamingMap) {
         Objects.requireNonNull(roamingMap);
-        int prevSize = Collections.unmodifiableNavigableMap(roamingMap).size();
         Set<Map.Entry<K, V>> entrySetBefore = correctEntrySet(roamingMap);
+        int prevSize = entrySetBefore.size();
         int size = roamingMap.size();
         Set<Map.Entry<K, V>> entrySetAfter = correctEntrySet(roamingMap);
         if (!Objects.equals(entrySetBefore, entrySetAfter)) {
@@ -39,7 +43,6 @@ public class Barricade {
         }
         if (size != prevSize) {
             logger.log(Level.WARNING, "size method of RoamingMap returned incorrect value; correct value was used instead");
-            return size;
         }
         return prevSize;
     }
@@ -49,12 +52,13 @@ public class Barricade {
         Objects.requireNonNull(key);
         Objects.requireNonNull(value);
         Map<K, V> copy = new TreeMap<>();
+        copy.putAll(roamingMap);
         copy.put(key, value);
-        Set<Map.Entry<K, V>> prevRoamingSet = copy.entrySet();
+        Set<Map.Entry<K, V>> expectedSet = copy.entrySet();
         V lastValue = roamingMap.put(key, value);
         V updatedValue = getWithStateVar(roamingMap, key).value();
-        Set<Map.Entry<K, V>> newRoamingSet = correctEntrySet(roamingMap);
-        if (Objects.equals(updatedValue, value) && Objects.equals(prevRoamingSet, newRoamingSet)) {
+        Set<Map.Entry<K, V>> actualSet = correctEntrySet(roamingMap);
+        if (Objects.equals(updatedValue, value) && Objects.equals(expectedSet, actualSet)) {
             return new StateRecoveryOptional<>(lastValue, null);
         } else {
             throw new RuntimeException("put method of RoamingMap operated incorrectly");
@@ -82,6 +86,7 @@ public class Barricade {
         }
         if (!Objects.equals(prevRepresentation, representation)) {
             logger.log(Level.WARNING, "toString method of RoamingMap returned incorrect value; correct value was used instead");
+            return prevRepresentation;
         }
         return representation;
     }
