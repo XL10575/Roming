@@ -18,9 +18,14 @@ $ANT_HOME/lib must contain (see Ant-JUnit and JaCoCo installation guides):
   hamcrest-2.2.jar
   junit-4.13.jar
   jacocoant.jar
-
 -->
-<project name="testexample" xmlns:jacoco="antlib:org.jacoco.ant">
+<project name="testexample" default="test" xmlns:jacoco="antlib:org.jacoco.ant">
+
+  <!-- Define JaCoCo Ant tasks -->
+  <taskdef uri="antlib:org.jacoco.ant"
+           resource="org/jacoco/ant/antlib.xml"
+           classpath="${ant.home}/lib/jacocoant.jar"/>
+
   <!--   Directory with source files -->
   <property name="src.dir" value="src"/>
 
@@ -41,14 +46,18 @@ $ANT_HOME/lib must contain (see Ant-JUnit and JaCoCo installation guides):
   <!--   Directory for JavaDoc output -->
   <property name="doc.dir" value="doc"/>
 
-  <!--   Class containing the main method: define ONLY IF your project has a main -->
-  <!-- TODO: if this project specifies a main class, replace "HelloWorld" with that main class (otherwise, you can ignore this) -->
-  <!-- <property name="main-class" value="${ant.project.name}.HelloWorld"/> -->
+  <!--   Additional jar that may be needed for properly running junit -->
+  <!--
+       If you prefer an explicit JUnit path (instead of relying on jars in $ANT_HOME/lib),
+       uncomment and adapt as needed:
 
-  <!--   Additional jar that may be needed for properly runnign junit -->
-  <path id="hamcrest.classpath">
+  <path id="junit.classpath">
+    <pathelement location="${ant.home}/lib/junit-4.13.jar"/>
+    <pathelement location="${ant.home}/lib/ant-junit4.jar"/>
+    <pathelement location="${ant.home}/lib/ant-junit.jar"/>
     <pathelement location="${ant.home}/lib/hamcrest-2.2.jar"/>
   </path>
+  -->
 
   <!--   ant clean : remove generated files -->
   <target name="clean">
@@ -64,31 +73,24 @@ $ANT_HOME/lib must contain (see Ant-JUnit and JaCoCo installation guides):
     <javac srcdir="${src.dir}" destdir="${build.dir}" debug="true" includeAntRuntime="yes"/>
   </target>
 
-  <!--   ant run : define run target ONLY IF your project has a main -->
-  <!--
-  <target name="run" depends="build">
-    <mkdir dir="${output.dir}"/>
-    <java fork="true" classname="${main-class}" classpath="${build.dir}" output="${output.file}" error="${error.file}">
-      <assertions><enable/></assertions>
-      <arg line="${args}"/>
-    </java>
-  </target>
-  -->
-
-  <!--   ant test : run unit tests -->
+  <!--   ant test : run unit tests under JaCoCo coverage -->
   <target name="test" depends="build">
     <mkdir dir="${report.dir}"/>
     <mkdir dir="${junit.dir}"/>
     <mkdir dir="${jacoco.dir}"/>
     <jacoco:coverage destfile="${jacoco.file}">
       <junit fork="yes" includeAntRuntime="yes" printsummary="withOutAndErr">
-        <assertions><enable/></assertions>
+        <assertions>
+          <enable/>
+        </assertions>
         <formatter type="xml"/>
         <batchtest fork="yes" filtertrace="off" todir="${junit.dir}">
-          <!-- Updated fileset pattern to pick up classes ending with Test -->
+          <!-- Picks up all classes in build/ whose name ends with 'Test' -->
           <fileset dir="${build.dir}" includes="**/*Test.class"/>
         </batchtest>
-        <classpath refid="hamcrest.classpath"/>
+        <!-- If you set up a junit.classpath above, you can use:
+             <classpath refid="junit.classpath"/>
+             otherwise, jars in $ANT_HOME/lib are included automatically. -->
         <classpath path="${build.dir}"/>
       </junit>
     </jacoco:coverage>
@@ -105,7 +107,6 @@ $ANT_HOME/lib must contain (see Ant-JUnit and JaCoCo installation guides):
       <executiondata>
         <file file="${jacoco.file}"/>
       </executiondata>
-
       <structure name="${ant.project.name}">
         <classfiles>
           <fileset dir="${build.dir}">
@@ -116,7 +117,6 @@ $ANT_HOME/lib must contain (see Ant-JUnit and JaCoCo installation guides):
           <fileset dir="${src.dir}"/>
         </sourcefiles>
       </structure>
-
       <html destdir="${jacoco.dir}"/>
     </jacoco:report>
   </target>
