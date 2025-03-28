@@ -1,13 +1,13 @@
 <html xmlns:string="xalan://java.lang.String" xmlns:lxslt="http://xml.apache.org/xslt">
     <head>
         <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Unit Test Results: BarricadeTest</title>
+        <title>Unit Test Results: MatrixMapTest</title>
         <link rel="stylesheet" type="text/css" title="Style" href="stylesheet.css">
         <script type="text/javascript" language="JavaScript">
         var TestCases = new Array();
         var cur;
         
-    cur = TestCases['.BarricadeTest'] = new Array();
+    cur = TestCases['.MatrixMapTest'] = new Array();
     
         cur['_jacoco.agentFile'] = 'C:\\Users\\24457\\AppData\\Local\\Temp\\jacocoagent6478966961941720727.jar';
     
@@ -137,7 +137,7 @@
     
         cur['sun.io.unicode.encoding'] = 'UnicodeLittle';
     
-        cur['sun.java.command'] = 'org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\\Users\\24457\\Documents\\GitHub\\Roming\\report\\junit\\TEST-BarricadeTest.xml crashfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junitvmwatcher1144097991055326395.properties propsfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junit16135820467907870283.properties';
+        cur['sun.java.command'] = 'org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MatrixMapTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\\Users\\24457\\Documents\\GitHub\\Roming\\report\\junit\\TEST-MatrixMapTest.xml crashfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junitvmwatcher5762318185355399277.properties propsfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junit4257545955343000706.properties';
     
         cur['sun.java.launcher'] = 'SUN_STANDARD';
     
@@ -198,127 +198,64 @@
             </tr>
         </table>
         <hr size="1">
-        <h3>Class BarricadeTest</h3>
+        <h3>Class MatrixMapTest</h3>
         <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
             <tr valign="top">
                 <th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th>Skipped</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
             </tr>
-            <tr valign="top" class="Error">
-                <td><a title="Display all tests" href="0_BarricadeTest.html">BarricadeTest</a></td><td><a title="Display all tests" href="0_BarricadeTest.html">21</a></td><td><a title="Display only errors" href="0_BarricadeTest-errors.html">1</a></td><td><a title="Display only failures" href="0_BarricadeTest-fails.html">3</a></td><td>0</td><td>0.099</td><td>2025-03-28T06:54:22</td><td>WDNMD</td>
+            <tr valign="top" class="Failure">
+                <td><a title="Display all tests" href="1_MatrixMapTest.html">MatrixMapTest</a></td><td><a title="Display all tests" href="1_MatrixMapTest.html">18</a></td><td>0</td><td><a title="Display only failures" href="1_MatrixMapTest-fails.html">3</a></td><td>0</td><td>0.103</td><td>2025-03-28T06:54:23</td><td>WDNMD</td>
             </tr>
         </table>
-        <h2>Tests</h2>
+        <h2>Failures</h2>
         <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
             <tr valign="top">
                 <th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
             </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testCorrectSize_NullMap"></a>testCorrectSize_NullMap</td><td>Success</td><td></td><td>0.010</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testBarricadeConstructor"></a>testBarricadeConstructor</td><td>Success</td><td></td><td>0.001</td>
-            </tr>
-            <tr valign="top" class="Error">
-                <td><a name="testPutWithStateVar_StateChange"></a>testPutWithStateVar_StateChange</td><td>Error</td><td>Cannot invoke "String.contains(java.lang.CharSequence)" because the return value of "java.lang.RuntimeException.getMessage()" is null
+            <tr valign="top" class="Failure">
+                <td><a name="testInstanceIndexesHappyPath"></a>testInstanceIndexesHappyPath</td><td>Failure</td><td>expected:&lt;[(0,1)]&gt; but was:&lt;[Indexes[row=0, column=1]]&gt;
                     <br>
                     <br>
-                    <code>java.lang.NullPointerException: Cannot invoke "String.contains(java.lang.CharSequence)" because the return value of "java.lang.RuntimeException.getMessage()" is null
+                    <code>junit.framework.AssertionFailedError: expected:&lt;[(0,1)]&gt; but was:&lt;[Indexes[row=0, column=1]]&gt;
                         <br>
-                        	at BarricadeTest.testPutWithStateVar_StateChange(BarricadeTest.java:279)
+                        	at MatrixMapTest.testInstanceIndexesHappyPath(MatrixMapTest.java:31)
                         <br>
                         	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
                         <br>
-                    </code></td><td>0.007</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testGetWithStateVar_HappyPath"></a>testGetWithStateVar_HappyPath</td><td>Success</td><td></td><td>0.002</td>
+                    </code></td><td>0.030</td>
             </tr>
             <tr valign="top" class="Failure">
-                <td><a name="testCorrectStringRepresentation_OperatedIncorrectly"></a>testCorrectStringRepresentation_OperatedIncorrectly</td><td>Failure</td><td>Expected runtime exception for changed entry set in toString
+                <td><a name="testSize_EmptyMapCase"></a>testSize_EmptyMapCase</td><td>Failure</td><td>expected:&lt;0&gt; but was:&lt;1&gt;
                     <br>
                     <br>
-                    <code>junit.framework.AssertionFailedError: Expected runtime exception for changed entry set in toString
+                    <code>junit.framework.AssertionFailedError: expected:&lt;0&gt; but was:&lt;1&gt;
                         <br>
-                        	at BarricadeTest.testCorrectStringRepresentation_OperatedIncorrectly(BarricadeTest.java:164)
-                        <br>
-                        	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-                        <br>
-                    </code></td><td>0.002</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testCorrectStringRepresentation_WrongString"></a>testCorrectStringRepresentation_WrongString</td><td>Success</td><td></td><td>0.002</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testPutWithStateVar_NullValue"></a>testPutWithStateVar_NullValue</td><td>Success</td><td></td><td>0.001</td>
-            </tr>
-            <tr valign="top" class="Failure">
-                <td><a name="testCorrectSize_OperatedIncorrectly"></a>testCorrectSize_OperatedIncorrectly</td><td>Failure</td><td>Expected runtime exception for changed entrySet
-                    <br>
-                    <br>
-                    <code>junit.framework.AssertionFailedError: Expected runtime exception for changed entrySet
-                        <br>
-                        	at BarricadeTest.testCorrectSize_OperatedIncorrectly(BarricadeTest.java:92)
+                        	at MatrixMapTest.testSize_EmptyMapCase(MatrixMapTest.java:81)
                         <br>
                         	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
                         <br>
                     </code></td><td>0.001</td>
             </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testGetWithStateVar_NullKey"></a>testGetWithStateVar_NullKey</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testGetWithStateVar_NullMap"></a>testGetWithStateVar_NullMap</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testPutWithStateVar_NullKey"></a>testPutWithStateVar_NullKey</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testPutWithStateVar_NullMap"></a>testPutWithStateVar_NullMap</td><td>Success</td><td></td><td>0.001</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testPutWithStateVar_FailsToInsert"></a>testPutWithStateVar_FailsToInsert</td><td>Success</td><td></td><td>0.002</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testGetWithStateVar_WrongValue"></a>testGetWithStateVar_WrongValue</td><td>Success</td><td></td><td>0.001</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testCorrectStringRepresentation_NullMap"></a>testCorrectStringRepresentation_NullMap</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testCorrectStringRepresentation_HappyPath"></a>testCorrectStringRepresentation_HappyPath</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testCorrectSize_HappyPath"></a>testCorrectSize_HappyPath</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testPutWithStateVar_HappyPath"></a>testPutWithStateVar_HappyPath</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testCorrectEntrySet_NullMap"></a>testCorrectEntrySet_NullMap</td><td>Success</td><td></td><td>0.000</td>
-            </tr>
             <tr valign="top" class="Failure">
-                <td><a name="testCorrectSize_WrongValue"></a>testCorrectSize_WrongValue</td><td>Failure</td><td>expected:&lt;1&gt; but was:&lt;999&gt;
+                <td><a name="testSize_EmptyMatrix"></a>testSize_EmptyMatrix</td><td>Failure</td><td>expected:&lt;0&gt; but was:&lt;1&gt;
                     <br>
                     <br>
-                    <code>junit.framework.AssertionFailedError: expected:&lt;1&gt; but was:&lt;999&gt;
+                    <code>junit.framework.AssertionFailedError: expected:&lt;0&gt; but was:&lt;1&gt;
                         <br>
-                        	at BarricadeTest.testCorrectSize_WrongValue(BarricadeTest.java:114)
+                        	at MatrixMapTest.testSize_EmptyMatrix(MatrixMapTest.java:120)
                         <br>
                         	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
                         <br>
-                    </code></td><td>0.001</td>
-            </tr>
-            <tr valign="top" class="TableRowColor">
-                <td><a name="testCorrectKeySet_NullMap"></a>testCorrectKeySet_NullMap</td><td>Success</td><td></td><td>0.000</td>
+                    </code></td><td>0.000</td>
             </tr>
         </table>
         <div class="Properties">
-            <a href="javascript:displayProperties('.BarricadeTest');">
+            <a href="javascript:displayProperties('.MatrixMapTest');">
                     Properties &raquo;
                 </a>
         </div>
         <div class="Properties">
-            <a href="./0_BarricadeTest-out.html">
+            <a href="./1_MatrixMapTest-out.html">
                         System.out &raquo;
                     </a>
         </div>

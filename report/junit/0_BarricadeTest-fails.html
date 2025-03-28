@@ -9,7 +9,7 @@
         
     cur = TestCases['.BarricadeTest'] = new Array();
     
-        cur['_jacoco.agentFile'] = 'C:\\Users\\24457\\AppData\\Local\\Temp\\jacocoagent3122711414389915080.jar';
+        cur['_jacoco.agentFile'] = 'C:\\Users\\24457\\AppData\\Local\\Temp\\jacocoagent6478966961941720727.jar';
     
         cur['ant.core.lib'] = 'C:\\Program Files (x86)\\apache-ant-1.10.15-bin\\apache-ant-1.10.15\\lib\\ant.jar';
     
@@ -137,7 +137,7 @@
     
         cur['sun.io.unicode.encoding'] = 'UnicodeLittle';
     
-        cur['sun.java.command'] = 'org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\\Users\\24457\\Documents\\GitHub\\Roming\\report\\junit\\TEST-BarricadeTest.xml crashfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junitvmwatcher14785985603056190368.properties propsfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junit14719683388489646368.properties';
+        cur['sun.java.command'] = 'org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\\Users\\24457\\Documents\\GitHub\\Roming\\report\\junit\\TEST-BarricadeTest.xml crashfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junitvmwatcher1144097991055326395.properties propsfile=C:\\Users\\24457\\Documents\\GitHub\\Roming\\junit16135820467907870283.properties';
     
         cur['sun.java.launcher'] = 'SUN_STANDARD';
     
@@ -203,8 +203,8 @@
             <tr valign="top">
                 <th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th>Skipped</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
             </tr>
-            <tr valign="top" class="Failure">
-                <td><a title="Display all tests" href="0_BarricadeTest.html">BarricadeTest</a></td><td><a title="Display all tests" href="0_BarricadeTest.html">10</a></td><td>0</td><td><a title="Display only failures" href="0_BarricadeTest-fails.html">3</a></td><td>0</td><td>0.083</td><td>2025-03-28T05:25:41</td><td>WDNMD</td>
+            <tr valign="top" class="Error">
+                <td><a title="Display all tests" href="0_BarricadeTest.html">BarricadeTest</a></td><td><a title="Display all tests" href="0_BarricadeTest.html">21</a></td><td><a title="Display only errors" href="0_BarricadeTest-errors.html">1</a></td><td><a title="Display only failures" href="0_BarricadeTest-fails.html">3</a></td><td>0</td><td>0.099</td><td>2025-03-28T06:54:22</td><td>WDNMD</td>
             </tr>
         </table>
         <h2>Failures</h2>
@@ -213,32 +213,40 @@
                 <th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
             </tr>
             <tr valign="top" class="Failure">
-                <td><a name="testCorrectSize_StateChangingSizeThrows"></a>testCorrectSize_StateChangingSizeThrows</td><td>Failure</td><td>Expected exception: java.lang.RuntimeException
+                <td><a name="testCorrectStringRepresentation_OperatedIncorrectly"></a>testCorrectStringRepresentation_OperatedIncorrectly</td><td>Failure</td><td>Expected runtime exception for changed entry set in toString
                     <br>
                     <br>
-                    <code>junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
+                    <code>junit.framework.AssertionFailedError: Expected runtime exception for changed entry set in toString
                         <br>
-                    </code></td><td>0.017</td>
-            </tr>
-            <tr valign="top" class="Failure">
-                <td><a name="testCorrectSize_WrongSizeLogged"></a>testCorrectSize_WrongSizeLogged</td><td>Failure</td><td>expected:&lt;2&gt; but was:&lt;999&gt;
-                    <br>
-                    <br>
-                    <code>junit.framework.AssertionFailedError: expected:&lt;2&gt; but was:&lt;999&gt;
-                        <br>
-                        	at BarricadeTest.testCorrectSize_WrongSizeLogged(BarricadeTest.java:87)
+                        	at BarricadeTest.testCorrectStringRepresentation_OperatedIncorrectly(BarricadeTest.java:164)
                         <br>
                         	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
                         <br>
                     </code></td><td>0.002</td>
             </tr>
             <tr valign="top" class="Failure">
-                <td><a name="testCorrectStringRepresentation_StateChange"></a>testCorrectStringRepresentation_StateChange</td><td>Failure</td><td>Expected exception: java.lang.RuntimeException
+                <td><a name="testCorrectSize_OperatedIncorrectly"></a>testCorrectSize_OperatedIncorrectly</td><td>Failure</td><td>Expected runtime exception for changed entrySet
                     <br>
                     <br>
-                    <code>junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
+                    <code>junit.framework.AssertionFailedError: Expected runtime exception for changed entrySet
                         <br>
-                    </code></td><td>0.000</td>
+                        	at BarricadeTest.testCorrectSize_OperatedIncorrectly(BarricadeTest.java:92)
+                        <br>
+                        	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+                        <br>
+                    </code></td><td>0.001</td>
+            </tr>
+            <tr valign="top" class="Failure">
+                <td><a name="testCorrectSize_WrongValue"></a>testCorrectSize_WrongValue</td><td>Failure</td><td>expected:&lt;1&gt; but was:&lt;999&gt;
+                    <br>
+                    <br>
+                    <code>junit.framework.AssertionFailedError: expected:&lt;1&gt; but was:&lt;999&gt;
+                        <br>
+                        	at BarricadeTest.testCorrectSize_WrongValue(BarricadeTest.java:114)
+                        <br>
+                        	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+                        <br>
+                    </code></td><td>0.001</td>
             </tr>
         </table>
         <div class="Properties">

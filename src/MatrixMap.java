@@ -133,4 +133,7 @@ public final class MatrixMap<T> {
         });
         return matrix;
     }
+    static {
+        System.out.println("MATRIXMAP CLASS LOADED");
+    }
 }

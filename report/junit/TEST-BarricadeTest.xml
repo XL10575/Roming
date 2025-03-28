@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="3" hostname="WDNMD" name="BarricadeTest" skipped="0" tests="10" time="0.083" timestamp="2025-03-28T05:25:41">
+<testsuite errors="1" failures="3" hostname="WDNMD" name="BarricadeTest" skipped="0" tests="21" time="0.099" timestamp="2025-03-28T06:54:22">
   <properties>
     <property name="ant.library.dir" value="C:\Program Files (x86)\apache-ant-1.10.15-bin\apache-ant-1.10.15\lib" />
     <property name="ant.file.type" value="file" />
@@ -18,13 +18,13 @@
     <property name="user.country" value="US" />
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-21.0.6.7-hotspot\bin" />
     <property name="output.dir" value="output" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\24457\Documents\GitHub\Roming\report\junit\TEST-BarricadeTest.xml crashfile=C:\Users\24457\Documents\GitHub\Roming\junitvmwatcher14785985603056190368.properties propsfile=C:\Users\24457\Documents\GitHub\Roming\junit14719683388489646368.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\24457\Documents\GitHub\Roming\report\junit\TEST-BarricadeTest.xml crashfile=C:\Users\24457\Documents\GitHub\Roming\junitvmwatcher1144097991055326395.properties propsfile=C:\Users\24457\Documents\GitHub\Roming\junit16135820467907870283.properties" />
     <property name="jdk.debug" value="release" />
     <property name="sun.cpu.endian" value="little" />
     <property name="user.home" value="C:\Users\24457" />
     <property name="user.language" value="en" />
     <property name="java.specification.vendor" value="Oracle Corporation" />
-    <property name="_jacoco.agentFile" value="C:\Users\24457\AppData\Local\Temp\jacocoagent3122711414389915080.jar" />
+    <property name="_jacoco.agentFile" value="C:\Users\24457\AppData\Local\Temp\jacocoagent6478966961941720727.jar" />
     <property name="java.version.date" value="2025-01-21" />
     <property name="java.home" value="C:\Program Files\Eclipse Adoptium\jdk-21.0.6.7-hotspot" />
     <property name="basedir" value="C:\Users\24457\Documents\GitHub\Roming" />
@@ -78,27 +78,47 @@
     <property name="src.dir" value="src" />
     <property name="ant.project.default-target" value="test" />
   </properties>
-  <testcase classname="BarricadeTest" name="testCorrectSize_StateChangingSizeThrows" time="0.017">
-    <failure message="Expected exception: java.lang.RuntimeException" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
-</failure>
+  <testcase classname="BarricadeTest" name="testCorrectSize_NullMap" time="0.01" />
+  <testcase classname="BarricadeTest" name="testBarricadeConstructor" time="0.001" />
+  <testcase classname="BarricadeTest" name="testPutWithStateVar_StateChange" time="0.007">
+    <error message="Cannot invoke &quot;String.contains(java.lang.CharSequence)&quot; because the return value of &quot;java.lang.RuntimeException.getMessage()&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;String.contains(java.lang.CharSequence)&quot; because the return value of &quot;java.lang.RuntimeException.getMessage()&quot; is null
+	at BarricadeTest.testPutWithStateVar_StateChange(BarricadeTest.java:279)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+</error>
   </testcase>
-  <testcase classname="BarricadeTest" name="testGetWithStateVar_IncorrectValueLogged" time="0.004" />
-  <testcase classname="BarricadeTest" name="testCorrectSize_WrongSizeLogged" time="0.002">
-    <failure message="expected:&lt;2&gt; but was:&lt;999&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;2&gt; but was:&lt;999&gt;
-	at BarricadeTest.testCorrectSize_WrongSizeLogged(BarricadeTest.java:87)
+  <testcase classname="BarricadeTest" name="testGetWithStateVar_HappyPath" time="0.002" />
+  <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_OperatedIncorrectly" time="0.002">
+    <failure message="Expected runtime exception for changed entry set in toString" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected runtime exception for changed entry set in toString
+	at BarricadeTest.testCorrectStringRepresentation_OperatedIncorrectly(BarricadeTest.java:164)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 </failure>
   </testcase>
-  <testcase classname="BarricadeTest" name="testKeySetAndEntrySet" time="0.0" />
-  <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_WrongStringLogged" time="0.0" />
-  <testcase classname="BarricadeTest" name="testPutWithStateVar_MisbehavingPutThrows" time="0.0" />
-  <testcase classname="BarricadeTest" name="testGetPutSizeCorrect" time="0.0" />
-  <testcase classname="BarricadeTest" name="testConstructor" time="0.0" />
-  <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_StateChange" time="0.0">
-    <failure message="Expected exception: java.lang.RuntimeException" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
+  <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_WrongString" time="0.002" />
+  <testcase classname="BarricadeTest" name="testPutWithStateVar_NullValue" time="0.001" />
+  <testcase classname="BarricadeTest" name="testCorrectSize_OperatedIncorrectly" time="0.001">
+    <failure message="Expected runtime exception for changed entrySet" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected runtime exception for changed entrySet
+	at BarricadeTest.testCorrectSize_OperatedIncorrectly(BarricadeTest.java:92)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 </failure>
   </testcase>
-  <testcase classname="BarricadeTest" name="testGetWithStateVar_StateChangingGetThrows" time="0.001" />
+  <testcase classname="BarricadeTest" name="testGetWithStateVar_NullKey" time="0.0" />
+  <testcase classname="BarricadeTest" name="testGetWithStateVar_NullMap" time="0.0" />
+  <testcase classname="BarricadeTest" name="testPutWithStateVar_NullKey" time="0.0" />
+  <testcase classname="BarricadeTest" name="testPutWithStateVar_NullMap" time="0.001" />
+  <testcase classname="BarricadeTest" name="testPutWithStateVar_FailsToInsert" time="0.002" />
+  <testcase classname="BarricadeTest" name="testGetWithStateVar_WrongValue" time="0.001" />
+  <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_NullMap" time="0.0" />
+  <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_HappyPath" time="0.0" />
+  <testcase classname="BarricadeTest" name="testCorrectSize_HappyPath" time="0.0" />
+  <testcase classname="BarricadeTest" name="testPutWithStateVar_HappyPath" time="0.0" />
+  <testcase classname="BarricadeTest" name="testCorrectEntrySet_NullMap" time="0.0" />
+  <testcase classname="BarricadeTest" name="testCorrectSize_WrongValue" time="0.001">
+    <failure message="expected:&lt;1&gt; but was:&lt;999&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;1&gt; but was:&lt;999&gt;
+	at BarricadeTest.testCorrectSize_WrongValue(BarricadeTest.java:114)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+</failure>
+  </testcase>
+  <testcase classname="BarricadeTest" name="testCorrectKeySet_NullMap" time="0.0" />
   <system-out><![CDATA[BARRICADE CLASS LOADED
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="3" hostname="WDNMD" id="0" name="BarricadeTest" package="" skipped="0" tests="10" time="0.083" timestamp="2025-03-28T05:25:41">
+  <testsuite errors="1" failures="3" hostname="WDNMD" id="0" name="BarricadeTest" package="" skipped="0" tests="21" time="0.099" timestamp="2025-03-28T06:54:22">
       <properties>
           <property name="ant.library.dir" value="C:\Program Files (x86)\apache-ant-1.10.15-bin\apache-ant-1.10.15\lib" />
 
@@ -36,7 +36,7 @@
 
           <property name="output.dir" value="output" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\24457\Documents\GitHub\Roming\report\junit\TEST-BarricadeTest.xml crashfile=C:\Users\24457\Documents\GitHub\Roming\junitvmwatcher14785985603056190368.properties propsfile=C:\Users\24457\Documents\GitHub\Roming\junit14719683388489646368.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner BarricadeTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\24457\Documents\GitHub\Roming\report\junit\TEST-BarricadeTest.xml crashfile=C:\Users\24457\Documents\GitHub\Roming\junitvmwatcher1144097991055326395.properties propsfile=C:\Users\24457\Documents\GitHub\Roming\junit16135820467907870283.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -48,7 +48,7 @@
 
           <property name="java.specification.vendor" value="Oracle Corporation" />
 
-          <property name="_jacoco.agentFile" value="C:\Users\24457\AppData\Local\Temp\jacocoagent3122711414389915080.jar" />
+          <property name="_jacoco.agentFile" value="C:\Users\24457\AppData\Local\Temp\jacocoagent6478966961941720727.jar" />
 
           <property name="java.version.date" value="2025-01-21" />
 
@@ -156,39 +156,71 @@
 
       </properties>
 
-      <testcase classname="BarricadeTest" name="testCorrectSize_StateChangingSizeThrows" time="0.017">
-          <failure message="Expected exception: java.lang.RuntimeException" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
-</failure>
+      <testcase classname="BarricadeTest" name="testCorrectSize_NullMap" time="0.01" />
+
+      <testcase classname="BarricadeTest" name="testBarricadeConstructor" time="0.001" />
+
+      <testcase classname="BarricadeTest" name="testPutWithStateVar_StateChange" time="0.007">
+          <error message="Cannot invoke &quot;String.contains(java.lang.CharSequence)&quot; because the return value of &quot;java.lang.RuntimeException.getMessage()&quot; is null" type="java.lang.NullPointerException">java.lang.NullPointerException: Cannot invoke &quot;String.contains(java.lang.CharSequence)&quot; because the return value of &quot;java.lang.RuntimeException.getMessage()&quot; is null
+	at BarricadeTest.testPutWithStateVar_StateChange(BarricadeTest.java:279)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+</error>
 
       </testcase>
 
-      <testcase classname="BarricadeTest" name="testGetWithStateVar_IncorrectValueLogged" time="0.004" />
+      <testcase classname="BarricadeTest" name="testGetWithStateVar_HappyPath" time="0.002" />
 
-      <testcase classname="BarricadeTest" name="testCorrectSize_WrongSizeLogged" time="0.002">
-          <failure message="expected:&lt;2&gt; but was:&lt;999&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;2&gt; but was:&lt;999&gt;
-	at BarricadeTest.testCorrectSize_WrongSizeLogged(BarricadeTest.java:87)
+      <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_OperatedIncorrectly" time="0.002">
+          <failure message="Expected runtime exception for changed entry set in toString" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected runtime exception for changed entry set in toString
+	at BarricadeTest.testCorrectStringRepresentation_OperatedIncorrectly(BarricadeTest.java:164)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 </failure>
 
       </testcase>
 
-      <testcase classname="BarricadeTest" name="testKeySetAndEntrySet" time="0.0" />
+      <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_WrongString" time="0.002" />
 
-      <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_WrongStringLogged" time="0.0" />
+      <testcase classname="BarricadeTest" name="testPutWithStateVar_NullValue" time="0.001" />
 
-      <testcase classname="BarricadeTest" name="testPutWithStateVar_MisbehavingPutThrows" time="0.0" />
-
-      <testcase classname="BarricadeTest" name="testGetPutSizeCorrect" time="0.0" />
-
-      <testcase classname="BarricadeTest" name="testConstructor" time="0.0" />
-
-      <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_StateChange" time="0.0">
-          <failure message="Expected exception: java.lang.RuntimeException" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected exception: java.lang.RuntimeException
+      <testcase classname="BarricadeTest" name="testCorrectSize_OperatedIncorrectly" time="0.001">
+          <failure message="Expected runtime exception for changed entrySet" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: Expected runtime exception for changed entrySet
+	at BarricadeTest.testCorrectSize_OperatedIncorrectly(BarricadeTest.java:92)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 </failure>
 
       </testcase>
 
-      <testcase classname="BarricadeTest" name="testGetWithStateVar_StateChangingGetThrows" time="0.001" />
+      <testcase classname="BarricadeTest" name="testGetWithStateVar_NullKey" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testGetWithStateVar_NullMap" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testPutWithStateVar_NullKey" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testPutWithStateVar_NullMap" time="0.001" />
+
+      <testcase classname="BarricadeTest" name="testPutWithStateVar_FailsToInsert" time="0.002" />
+
+      <testcase classname="BarricadeTest" name="testGetWithStateVar_WrongValue" time="0.001" />
+
+      <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_NullMap" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testCorrectStringRepresentation_HappyPath" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testCorrectSize_HappyPath" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testPutWithStateVar_HappyPath" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testCorrectEntrySet_NullMap" time="0.0" />
+
+      <testcase classname="BarricadeTest" name="testCorrectSize_WrongValue" time="0.001">
+          <failure message="expected:&lt;1&gt; but was:&lt;999&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;1&gt; but was:&lt;999&gt;
+	at BarricadeTest.testCorrectSize_WrongValue(BarricadeTest.java:114)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+</failure>
+
+      </testcase>
+
+      <testcase classname="BarricadeTest" name="testCorrectKeySet_NullMap" time="0.0" />
 
       <system-out><![CDATA[BARRICADE CLASS LOADED
 ]]></system-out>
@@ -196,7 +228,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" hostname="WDNMD" id="1" name="MatrixMapTest" package="" skipped="0" tests="25" time="0.096" timestamp="2025-03-28T05:25:42">
+  <testsuite errors="0" failures="3" hostname="WDNMD" id="1" name="MatrixMapTest" package="" skipped="0" tests="18" time="0.103" timestamp="2025-03-28T06:54:23">
       <properties>
           <property name="ant.library.dir" value="C:\Program Files (x86)\apache-ant-1.10.15-bin\apache-ant-1.10.15\lib" />
 
@@ -232,7 +264,7 @@
 
           <property name="output.dir" value="output" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MatrixMapTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\24457\Documents\GitHub\Roming\report\junit\TEST-MatrixMapTest.xml crashfile=C:\Users\24457\Documents\GitHub\Roming\junitvmwatcher17403262190104679913.properties propsfile=C:\Users\24457\Documents\GitHub\Roming\junit5374447089061101195.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MatrixMapTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.OutErrSummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\24457\Documents\GitHub\Roming\report\junit\TEST-MatrixMapTest.xml crashfile=C:\Users\24457\Documents\GitHub\Roming\junitvmwatcher5762318185355399277.properties propsfile=C:\Users\24457\Documents\GitHub\Roming\junit4257545955343000706.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -244,7 +276,7 @@
 
           <property name="java.specification.vendor" value="Oracle Corporation" />
 
-          <property name="_jacoco.agentFile" value="C:\Users\24457\AppData\Local\Temp\jacocoagent3122711414389915080.jar" />
+          <property name="_jacoco.agentFile" value="C:\Users\24457\AppData\Local\Temp\jacocoagent6478966961941720727.jar" />
 
           <property name="java.version.date" value="2025-01-21" />
 
@@ -352,57 +384,62 @@
 
       </properties>
 
-      <testcase classname="MatrixMapTest" name="testConstant_InvalidSize" time="0.005" />
+      <testcase classname="MatrixMapTest" name="testFrom_ZeroRow" time="0.005" />
 
-      <testcase classname="MatrixMapTest" name="testValue_OutOfBounds" time="0.019" />
+      <testcase classname="MatrixMapTest" name="testInstanceIndexesHappyPath" time="0.03">
+          <failure message="expected:&lt;[(0,1)]&gt; but was:&lt;[Indexes[row=0, column=1]]&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;[(0,1)]&gt; but was:&lt;[Indexes[row=0, column=1]]&gt;
+	at MatrixMapTest.testInstanceIndexesHappyPath(MatrixMapTest.java:31)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+</failure>
 
-      <testcase classname="MatrixMapTest" name="testInstance_normal" time="0.001" />
+      </testcase>
 
-      <testcase classname="MatrixMapTest" name="testMinimalMatrix" time="0.001" />
+      <testcase classname="MatrixMapTest" name="testInvalidLengthExceptionGetters" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testConstant_NullValue" time="0.001" />
+      <testcase classname="MatrixMapTest" name="testIdentityBranchCoverage" time="0.001" />
 
-      <testcase classname="MatrixMapTest" name="testInstance_Indexes_NullSize" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testSize_NormalMatrix" time="0.001" />
 
-      <testcase classname="MatrixMapTest" name="testFrom_raggedArray" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testInstanceNullSize" time="0.001" />
 
-      <testcase classname="MatrixMapTest" name="testFrom_normal" time="0.001" />
+      <testcase classname="MatrixMapTest" name="testIdentityNullZero" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testToStringCheck" time="0.005" />
+      <testcase classname="MatrixMapTest" name="testSize_EmptyMapCase" time="0.001">
+          <failure message="expected:&lt;0&gt; but was:&lt;1&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;0&gt; but was:&lt;1&gt;
+	at MatrixMapTest.testSize_EmptyMapCase(MatrixMapTest.java:81)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+</failure>
 
-      <testcase classname="MatrixMapTest" name="testIdentity_NullZero" time="0.0" />
+      </testcase>
 
-      <testcase classname="MatrixMapTest" name="testConstant" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testSizeBranchCoverage" time="0.001" />
 
-      <testcase classname="MatrixMapTest" name="testFrom_emptyInner" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testInstanceNullValueMapper" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testFrom_emptyOuter" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testSize_EmptyMatrix" time="0.0">
+          <failure message="expected:&lt;0&gt; but was:&lt;1&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;0&gt; but was:&lt;1&gt;
+	at MatrixMapTest.testSize_EmptyMatrix(MatrixMapTest.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+</failure>
 
-      <testcase classname="MatrixMapTest" name="testInstance_Indexes_Invalid" time="0.001" />
+      </testcase>
 
-      <testcase classname="MatrixMapTest" name="testIdentity" time="0.001" />
+      <testcase classname="MatrixMapTest" name="testFrom_Null" time="0.002" />
 
-      <testcase classname="MatrixMapTest" name="testSize_EmptyMatrix" time="0.001" />
+      <testcase classname="MatrixMapTest" name="testIdentityNullIdentity" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testFrom_null" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testFrom_ZeroColumn" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testInstance_SizeIndexes" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testValueNullIndexes" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testIdentity_NullIdentity" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testFrom_Valid" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testInstance_NullMapper" time="0.001" />
+      <testcase classname="MatrixMapTest" name="testIdentityZeroSize" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testIdentity_InvalidSize" time="0.0" />
+      <testcase classname="MatrixMapTest" name="testConstructor" time="0.0" />
 
-      <testcase classname="MatrixMapTest" name="testInstance_OneDimensional" time="0.002" />
-
-      <testcase classname="MatrixMapTest" name="testInstance_InvalidCols" time="0.001" />
-
-      <testcase classname="MatrixMapTest" name="testInstance_InvalidRows" time="0.0" />
-
-      <testcase classname="MatrixMapTest" name="testValue_NullIndexes" time="0.0" />
-
-      <system-out><![CDATA[BARRICADE CLASS LOADED
+      <system-out><![CDATA[MATRIXMAP CLASS LOADED
+BARRICADE CLASS LOADED
 ]]></system-out>
 
       <system-err><![CDATA[]]></system-err>

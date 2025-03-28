@@ -22,8 +22,8 @@ import java.util.logging.Logger;
 <span class="fc" id="L22">                                    .orElse(null);</span>
 <span class="fc" id="L23">        V value = roamingMap.get(key);</span>
 <span class="fc" id="L24">        Set&lt;Map.Entry&lt;K, V&gt;&gt; entrySetAfter = correctEntrySet(roamingMap);</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (!Objects.equals(entrySetBefore, entrySetAfter)) {</span>
-<span class="fc" id="L26">            throw new RuntimeException(&quot;get method of RoamingMap operated incorrectly&quot;);</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (!Objects.equals(entrySetBefore, entrySetAfter)) {</span>
+<span class="nc" id="L26">            throw new RuntimeException(&quot;get method of RoamingMap operated incorrectly&quot;);</span>
         }
 <span class="fc bfc" id="L28" title="All 2 branches covered.">        if (!Objects.equals(prevValue, value)) {</span>
 <span class="fc" id="L29">            logger.log(Level.WARNING, &quot;get method of RoamingMap returned incorrect value; correct value was used instead&quot;);</span>
